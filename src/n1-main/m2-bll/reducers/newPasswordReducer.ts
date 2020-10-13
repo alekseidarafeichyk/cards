@@ -1,7 +1,8 @@
 const InitialState = {}
 
-export const newPasswordReducer = (state: any, action: any) => {
+export const newPasswordReducer = (state: any = InitialState, action: any) => {
     switch (action.type) {
-        default : return state
+        default :
+            return state
     }
 }
