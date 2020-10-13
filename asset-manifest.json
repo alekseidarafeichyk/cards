@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/alekseidarafeichyk/cards/static/css/main.90f2c478.chunk.css",
+    "main.js": "/alekseidarafeichyk/cards/static/js/main.8c1607c2.chunk.js",
+    "main.js.map": "/alekseidarafeichyk/cards/static/js/main.8c1607c2.chunk.js.map",
+    "runtime-main.js": "/alekseidarafeichyk/cards/static/js/runtime-main.078c479c.js",
+    "runtime-main.js.map": "/alekseidarafeichyk/cards/static/js/runtime-main.078c479c.js.map",
+    "static/js/2.217afec1.chunk.js": "/alekseidarafeichyk/cards/static/js/2.217afec1.chunk.js",
+    "static/js/2.217afec1.chunk.js.map": "/alekseidarafeichyk/cards/static/js/2.217afec1.chunk.js.map",
+    "index.html": "/alekseidarafeichyk/cards/index.html",
+    "precache-manifest.c621497eb78e67e76c6c064a4ccfd160.js": "/alekseidarafeichyk/cards/precache-manifest.c621497eb78e67e76c6c064a4ccfd160.js",
+    "service-worker.js": "/alekseidarafeichyk/cards/service-worker.js",
+    "static/css/main.90f2c478.chunk.css.map": "/alekseidarafeichyk/cards/static/css/main.90f2c478.chunk.css.map",
+    "static/js/2.217afec1.chunk.js.LICENSE.txt": "/alekseidarafeichyk/cards/static/js/2.217afec1.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.078c479c.js",
+    "static/js/2.217afec1.chunk.js",
+    "static/css/main.90f2c478.chunk.css",
+    "static/js/main.8c1607c2.chunk.js"
+  ]
+}
