@@ -1,0 +1,14 @@
+.link {
+    display: inline-block;
+    transition: .7s;
+    font-weight:bold;
+    text-decoration:none;
+}
+link:hover {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+}
+
+.active {
+    color: red;
+}
