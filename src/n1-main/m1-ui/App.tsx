@@ -6,11 +6,9 @@ import {HashRouter} from 'react-router-dom';
 const App = () => {
     return (
         <div className={'App'}>
-
             <HashRouter>
                 <Main/>
             </HashRouter>
-
         </div>
     );
 }
