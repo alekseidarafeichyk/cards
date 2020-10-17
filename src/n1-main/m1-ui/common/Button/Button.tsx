@@ -6,9 +6,7 @@ type ButtonPropsType =
     { name?: string };
 
 export const Button : FC<ButtonPropsType> = ({name,...rest}) => {
-    return <button className={style.button}
-                   onClick={()=>{alert(1)}}
-    >
+    return <button className={style.button} {...rest}>
         {name}
     </button>
 }
