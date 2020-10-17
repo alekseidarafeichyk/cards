@@ -1,6 +1,7 @@
 import React from 'react';
 import {Input} from "../../common/Input/Input";
 import {useFormik} from "formik";
+import {Button} from "../../common/Button/Button";
 
 export const PasswordRecovery = () => {
 
@@ -26,7 +27,7 @@ export const PasswordRecovery = () => {
                        value={formik.values.email}
                 />
                 <div>
-                    <button type="submit">Send</button>
+                    <Button type="submit" name={"Send"}/>
                 </div>
             </form>
         </div>
