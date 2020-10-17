@@ -1,10 +1,11 @@
 import React from 'react';
-import { Input } from '../../common/Input/Input';
+import {Input} from '../../common/Input/Input';
 import {Button} from '../../common/Button/Button';
 import style from './Register.module.css'
 import {useFormik} from 'formik';
 
 export const Register = () => {
+
     const formik = useFormik({
         initialValues: {
             email: '',
