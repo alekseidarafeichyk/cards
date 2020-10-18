@@ -3,6 +3,7 @@
     transition: .7s;
     font-weight:bold;
     text-decoration:none;
+    color: #111;
 }
 link:hover {
     -webkit-transform: scale(1.2);

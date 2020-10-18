@@ -3,7 +3,7 @@ import {registrationAPI} from '../../m3-dal/api';
 
 const InitialState : InitialStateType = {
     isRegistered: false,
-    error: '',
+    serverError: '',
     status: 'idle'
 }
 
@@ -13,7 +13,7 @@ export const registerReducer = (state = InitialState, action: ActionsType) : Ini
             return {
                 ...state,
                 isRegistered : action.isRegistered,
-                error: action.error ? action.error : ''
+                serverError: action.error ? action.error : ''
             }
         }
         case 'SET_STATUS': {
@@ -45,9 +45,9 @@ export const RegisterUserTC = (email: string,password: string) => (dispatch: Dis
 }
 
 //types
-type InitialStateType = {
+export type InitialStateType = {
     isRegistered: boolean,
-    error: string,
+    serverError: string,
     status: RequestStatusType
 }
 type ActionsType =
