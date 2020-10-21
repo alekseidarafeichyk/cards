@@ -7,6 +7,7 @@ type InputPropsType =
     id?: string
 };
 
-export const Input : FC<InputPropsType> = ({name,id,...rest}) => {
-    return <input className={style.input} {...rest} id={id} ></input>
-}
+export const Input : FC<InputPropsType> = React.memo (({name,id,...rest}) => {
+    return <input className={style.input} {...rest} id={id}></input>
+
+})
