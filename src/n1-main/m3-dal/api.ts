@@ -6,7 +6,25 @@ const instance = axios.create({
 })
 
 export const ApiAuth = {
-    login() {
-        instance.post('/auth/login',{})
+    me(token: string) {
+        instance.post<AuthResponseType>('/auth/me', {token})
+    },
+
+    login(email: string, password: string, rememberMe: boolean) {
+        instance.post<AuthResponseType>('/auth/login', {email, password, rememberMe})
     }
+}
+
+// Types
+
+type AuthResponseType = {
+    email: string
+    isAdmin: boolean
+    name: string
+    rememberMe: boolean
+    token: string,
+    tokenDeathTime: number,
+    __v: number,
+    _id: string,
+    success: boolean
 }
