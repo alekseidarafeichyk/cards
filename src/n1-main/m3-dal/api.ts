@@ -5,7 +5,7 @@ const instance = axios.create({
     baseURL: 'https://neko-back.herokuapp.com/2.0',
 })
 
-export const ApiAuth = {
+export const authApi = {
     me(token: string) {
         instance.post<AuthResponseType>('/auth/me', {token})
     },

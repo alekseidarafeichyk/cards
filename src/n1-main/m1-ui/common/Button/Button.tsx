@@ -7,7 +7,7 @@ type ButtonPropsType =
 
 export const Button : FC<ButtonPropsType> = ({name,...rest}) => {
     return <button className={style.button}{...rest}
-                   onClick={()=>{alert(1)}}
+                   onClick={()=>{}}
     >
         {name}
     </button>
