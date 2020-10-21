@@ -24,13 +24,11 @@ const setIsAuth = (isAuth: boolean)=> ({type: 'LOGIN/SET_IS_AUTH', isAuth} as co
 
 // Thunks
 
-export const LogIn = (email: string, password: string, rememberMe: boolean) => async (dispatch: Dispatch<ActionsTypes>) => {
-    try{
-        let response = await authApi.login(email, password, rememberMe)
-        dispatch(setIsAuth(true))
-    } catch (err) {
-        alert(err)
-    }
+export const LogIn = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch<ActionsTypes>) => {
+        authApi.login(email, password, rememberMe).then(response => {
+            dispatch(setIsAuth(true))
+        }).catch(err => alert(err.message))
+
 }
 
 // Types

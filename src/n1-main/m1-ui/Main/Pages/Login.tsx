@@ -5,7 +5,7 @@ import {Button} from "../../common/Button/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {LogIn} from "../../../m2-bll/reducers/loginReducer";
 import {RootState} from "../../../m2-bll/store";
-import { Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 
 type AuthData = {
@@ -19,9 +19,6 @@ export const Login = () => {
 
     const isAuth = useSelector((state: RootState) => state.login.isAuth)
 
-    if(isAuth){
-        return <Redirect to={'/'} />
-    }
 
     const formik = useFormik({
         initialValues: {
@@ -48,6 +45,11 @@ export const Login = () => {
             dispatch(LogIn(values.email, values.password, values.rememberMe))
         },
     });
+
+    if (isAuth) {
+        return <Redirect to={'/'}/>
+    }
+
     return (
         <form onSubmit={formik.handleSubmit}>
             <Input
@@ -63,12 +65,12 @@ export const Login = () => {
                 type={'password'}
                 {...formik.getFieldProps('password')}
             />
-            <input
+            remember me <input
                 type={'checkbox'}
                 {...formik.getFieldProps('password')}
             />
             {formik.errors.email ? <div>{formik.errors.password}</div> : null}
             <Button type="submit" name="Sign In"></Button>
         </form>
-    );
+    )
 }
