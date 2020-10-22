@@ -10,7 +10,7 @@ import {Redirect} from 'react-router-dom';
 import {login} from '../../routes/RoutePass';
 import {Loader} from '../../common/Loader/Loader';
 
-type FormikErrorType = {
+ type FormikErrorType = {
     email?: string
     password?: string
     repeatPassword?: string
@@ -45,6 +45,7 @@ export const Register = () => {
             return errors;
         },
         onSubmit: values => {
+            debugger
             dispatch(RegisterUserTC(values.email, values.password))
         },
     });
