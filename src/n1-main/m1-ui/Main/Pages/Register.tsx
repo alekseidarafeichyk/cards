@@ -45,7 +45,6 @@ export const Register = () => {
             return errors;
         },
         onSubmit: values => {
-            debugger
             dispatch(RegisterUserTC(values.email, values.password))
         },
     });
