@@ -44,8 +44,6 @@ export const Login = () => {
         },
         onSubmit: values => {
             dispatch(LogIn({...values}))
-            const [authUserData, setAuthUserData] = useState({})
-            setAuthUserData({...values})
         },
     });
 
