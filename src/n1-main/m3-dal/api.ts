@@ -5,10 +5,10 @@ const instance = axios.create({
     baseURL: 'https://neko-back.herokuapp.com/2.0',
 })
 
-<<<<<<< HEAD
+
 export const forgotAPI = {
     forgot(dataInForgot: dataInForgotType) {
-        return instance.post<ResponseType>("/auth/forgot", dataInForgot)
+        return instance.post<ResponseType>('/auth/forgot', dataInForgot)
     }
 }
 
@@ -23,15 +23,16 @@ type ResponseType = {
 }
 
 export const registrationAPI = (email: string, password: string) => {
-        return instance.post('/auth/register',{email, password});
-=======
+    return instance.post('/auth/register', {email, password});
+}
+
 export const authApi = {
     me() {
-       return instance.post<AuthResponseType>('/auth/me', {})
+        return instance.post<AuthResponseType>('/auth/me', {})
     },
 
     login(authUserData: AuthUserData) {
-       return instance.post<AuthResponseType>('/auth/login', {...authUserData})
+        return instance.post<AuthResponseType>('/auth/login', {...authUserData})
     }
 }
 
@@ -53,5 +54,4 @@ export type AuthUserData = {
     email: string
     password: string
     rememberMe: boolean
->>>>>>> origin/egor
 }
