@@ -1,4 +1,4 @@
-import {authApi} from "../../m3-dal/api";
+import {authApi, AuthUserData} from "../../m3-dal/api";
 import {Dispatch} from "redux";
 
 const InitialState = {
@@ -24,11 +24,20 @@ const setIsAuth = (isAuth: boolean)=> ({type: 'LOGIN/SET_IS_AUTH', isAuth} as co
 
 // Thunks
 
-export const LogIn = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch<ActionsTypes>) => {
-        authApi.login(email, password, rememberMe).then(response => {
+export const LogIn = (authUserData: AuthUserData) => (dispatch: Dispatch<ActionsTypes>) => {
+        authApi.login({...authUserData}).then(response => {
             dispatch(setIsAuth(true))
-        }).catch(err => alert(err.message))
+        }).catch(err => {
+            let error = err.response ? err.response.data.error : err.message
+            console.log(error)
+        })
+}
 
+export const authMe = () => (dispatch: Dispatch) => {
+    authApi.me().then(response => response).catch(err => {
+        let error = err.response ? err.response.data.error : err.message
+        console.log(error)
+    })
 }
 
 // Types

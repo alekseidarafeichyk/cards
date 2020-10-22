@@ -6,12 +6,12 @@ const instance = axios.create({
 })
 
 export const authApi = {
-    me(token: string) {
-       return instance.post<AuthResponseType>('/auth/me', {token})
+    me() {
+       return instance.post<AuthResponseType>('/auth/me', {})
     },
 
-    login(email: string, password: string, rememberMe: boolean) {
-       return instance.post<AuthResponseType>('/auth/login', {email, password, rememberMe})
+    login(authUserData: AuthUserData) {
+       return instance.post<AuthResponseType>('/auth/login', {...authUserData})
     }
 }
 
@@ -27,4 +27,10 @@ type AuthResponseType = {
     __v: number,
     _id: string,
     success: boolean
+}
+
+export type AuthUserData = {
+    email: string
+    password: string
+    rememberMe: boolean
 }

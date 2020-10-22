@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useFormik} from "formik";
 import {Input} from "../../common/Input/Input";
 import {Button} from "../../common/Button/Button";
@@ -16,6 +16,7 @@ type AuthData = {
 
 export const Login = () => {
     const dispatch = useDispatch()
+
 
     const isAuth = useSelector((state: RootState) => state.login.isAuth)
 
@@ -42,7 +43,9 @@ export const Login = () => {
             return errors;
         },
         onSubmit: values => {
-            dispatch(LogIn(values.email, values.password, values.rememberMe))
+            dispatch(LogIn({...values}))
+            const [authUserData, setAuthUserData] = useState({})
+            setAuthUserData({...values})
         },
     });
 
