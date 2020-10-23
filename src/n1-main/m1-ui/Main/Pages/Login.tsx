@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {LogIn} from "../../../m2-bll/reducers/loginReducer";
 import {RootState} from "../../../m2-bll/store";
 import {Redirect} from 'react-router-dom';
+import style from './Login.module.css'
 
 
 type AuthData = {
@@ -53,26 +54,28 @@ export const Login = () => {
     }
 
     return (
-        <form onSubmit={formik.handleSubmit}>
-            <Input
-                id={'email'}
-                type={'text'}
-                placeholder={'Enter your email'}
-                {...formik.getFieldProps('email')}
-            />
-            {formik.errors.email ? <div>{formik.errors.email}</div> : null}
-            <Input
-                id={'password'}
-                placeholder={'password'}
-                type={'password'}
-                {...formik.getFieldProps('password')}
-            />
-            remember me <input
+        <div className={style.formContainer}>
+            <form onSubmit={formik.handleSubmit}>
+                <Input
+                    id={'email'}
+                    type={'text'}
+                    placeholder={'Enter your email'}
+                    {...formik.getFieldProps('email')}
+                />
+                {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+                <Input
+                    id={'password'}
+                    placeholder={'password'}
+                    type={'password'}
+                    {...formik.getFieldProps('password')}
+                />
+                remember me <input
                 type={'checkbox'}
                 {...formik.getFieldProps('rememberMe')}
             />
-            {formik.errors.email ? <div>{formik.errors.password}</div> : null}
-            <Button type="submit" name="Sign In"></Button>
-        </form>
+                {formik.errors.email ? <div>{formik.errors.password}</div> : null}
+                <Button type="submit" name="Sign In"></Button>
+            </form>
+        </div>
     )
 }
