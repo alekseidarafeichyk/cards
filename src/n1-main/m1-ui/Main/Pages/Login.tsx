@@ -44,6 +44,7 @@ export const Login = () => {
         },
         onSubmit: values => {
             dispatch(LogIn({...values}))
+
         },
     });
 
@@ -68,7 +69,7 @@ export const Login = () => {
             />
             remember me <input
                 type={'checkbox'}
-                {...formik.getFieldProps('password')}
+                {...formik.getFieldProps('rememberMe')}
             />
             {formik.errors.email ? <div>{formik.errors.password}</div> : null}
             <Button type="submit" name="Sign In"></Button>
