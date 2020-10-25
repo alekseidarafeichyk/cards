@@ -25,8 +25,14 @@ export const registrationAPI = {
 }
 
 export const forgotAPI = {
-    forgot(dataInForgot: dataInForgotType) {
-        return instance.post<ResponseType>('/auth/forgot', dataInForgot)
+    forgot(email: string) {
+        return instance.post<ResponseType>('/auth/forgot', {
+            email: email,
+            from: "test-front-admin",
+            message: `<div style="background-color: gold; padding: 15px">Password recover link:
+                    <a href="https://alekseidarafeichyk.github.io/cards/#/new_password/$token$">link</a>
+                </div>`
+        })
     }
 }
 

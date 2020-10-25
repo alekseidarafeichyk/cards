@@ -10,7 +10,6 @@ import {
 } from '../../../../m2-bll/reducers/passwordRecoveryReducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../../m2-bll/store';
-import {dataInForgotType} from '../../../../m3-dal/api';
 import style from './PasswordRecovery.module.css'
 import {Loader} from '../../../common/Loader/Loader';
 import {validatePasswordRecoveryForm} from '../../../../m4-utils/validators/validators';
@@ -27,17 +26,6 @@ export const PasswordRecovery = () => {
         dispatch(SaveServerErrorAC(""))
     }
 
-    const onSubmit = (values: { email: string }) => {
-        const dataInForgot: dataInForgotType = {
-            email: values.email,
-            from: "test-front-admin",
-            message: `<div style="background-color: gold; padding: 15px">Password recover link:
-                    <a href="https://alekseidarafeichyk.github.io/cards/#/new_password/$token$">link</a>
-                </div>`
-        }
-        dispatch(passwordRecoveryTC(dataInForgot))
-    }
-
     const formik = useFormik({
         initialValues: {
             email: ''
@@ -47,7 +35,9 @@ export const PasswordRecovery = () => {
             validatePasswordRecoveryForm(values,errors)
             return errors;
         },
-        onSubmit,
+        onSubmit: values => {
+            dispatch(passwordRecoveryTC(values.email))
+        }
     });
 
     return (
