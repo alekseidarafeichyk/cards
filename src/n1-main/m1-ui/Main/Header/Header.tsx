@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './Header.module.css'
 import {NavLinkCommon} from '../../common/Navlink/NavlinkCommon';
-import {login, newPassword, passwordRecovery, profile, register} from '../../routes/RoutePass';
+import {login, newPassword, packs, passwordRecovery, profile, register} from '../../routes/RoutePass';
 
 export const Header = () => {
     return (
@@ -11,6 +11,6 @@ export const Header = () => {
             <NavLinkCommon to={passwordRecovery} linkName={'Password Recovery'}/>
             <NavLinkCommon to={newPassword} linkName={'New Password'}/>
             <NavLinkCommon to={profile} linkName={'Profile'}/>
-
+            <NavLinkCommon to={packs} linkName={'Packs'}/>
         </div>)
 }

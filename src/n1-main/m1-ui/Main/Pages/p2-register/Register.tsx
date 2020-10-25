@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {Input} from '../../common/Input/Input';
-import {Button} from '../../common/Button/Button';
+import {Input} from '../../../common/Input/Input';
+import {Button} from '../../../common/Button/Button';
 import style from './Register.module.css'
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,12 +9,12 @@ import {
     RegisterUserAC,
     RegisterUserTC,
     RequestStatusType
-} from '../../../m2-bll/reducers/registerReducer';
-import {RootState} from '../../../m2-bll/store';
+} from '../../../../m2-bll/reducers/registerReducer';
+import {RootState} from '../../../../m2-bll/store';
 import {Redirect} from 'react-router-dom';
-import {login} from '../../routes/RoutePass';
-import {Loader} from '../../common/Loader/Loader';
-import {validateRegisterForm} from '../../../m4-utils/validators/validators';
+import {login} from '../../../routes/RoutePass';
+import {Loader} from '../../../common/Loader/Loader';
+import {validateRegisterForm} from '../../../../m4-utils/validators/validators';
 
 export type RegisterErrorType = {
     email?: string | undefined
@@ -48,7 +48,7 @@ export const Register = () => {
      return ()=>{
          dispatch(RegisterUserAC(false))
      }
-    },[])
+    },[dispatch])
 
     if (isRegistered) {
         return <Redirect to={login}/>
