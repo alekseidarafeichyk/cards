@@ -5,13 +5,15 @@ import {newPasswordReducer} from './reducers/newPasswordReducer';
 import {passwordRecoveryReducer} from './reducers/passwordRecoveryReducer';
 import {registerReducer} from './reducers/registerReducer';
 import {profileReducer} from './reducers/profileReducer';
+import {loaderReducer} from './reducers/loaderReducer';
 
 let reducers = combineReducers({
     login: loginReducer,
     newPassword: newPasswordReducer,
     passwordRecover : passwordRecoveryReducer,
     register: registerReducer,
-    profile: profileReducer
+    profile: profileReducer,
+    loader: loaderReducer
 })
 
 export type RootState = ReturnType<typeof reducers>

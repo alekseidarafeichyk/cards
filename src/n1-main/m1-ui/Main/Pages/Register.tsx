@@ -1,24 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Input} from '../../common/Input/Input';
 import {Button} from '../../common/Button/Button';
 import style from './Register.module.css'
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
-import {InitialStateType, RegisterUserTC} from '../../../m2-bll/reducers/registerReducer';
+import {
+    InitialStateType,
+    RegisterUserAC,
+    RegisterUserTC,
+    RequestStatusType
+} from '../../../m2-bll/reducers/registerReducer';
 import {RootState} from '../../../m2-bll/store';
 import {Redirect} from 'react-router-dom';
 import {login} from '../../routes/RoutePass';
 import {Loader} from '../../common/Loader/Loader';
+import {validateRegisterForm} from '../../../m4-utils/validators/validators';
 
- type FormikErrorType = {
-    email?: string
+export type RegisterErrorType = {
+    email?: string | undefined
     password?: string
     repeatPassword?: string
 }
 
+
+
 export const Register = () => {
     const dispatch = useDispatch();
-    const {isRegistered, serverError, status} = useSelector<RootState, InitialStateType>(state => state.register)
+    const {isRegistered, serverError} = useSelector<RootState, InitialStateType>(state => state.register)
+    const status = useSelector<RootState,RequestStatusType>(state => state.loader.status)
 
     const formik = useFormik({
         initialValues: {
@@ -26,28 +35,20 @@ export const Register = () => {
             password: '',
             repeatPassword: '',
         },validate: (values) => {
-            const errors: FormikErrorType = {};
-            if (!values.email) {
-                errors.email = 'Required';
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                errors.email = 'Invalid email address';
-            }
-            if (!values.password) {
-                errors.password = 'Required';
-            } else if (values.password.length < 6) {
-                errors.password = 'Must be 5 characters or more';
-            }
-            if (!values.repeatPassword) {
-                errors.repeatPassword = 'Required';
-            } else if (values.password.length < 6) {
-                errors.password = 'Must be 5 characters or more';
-            }
+            const errors: RegisterErrorType = {};
+            validateRegisterForm(values ,errors)
             return errors;
         },
         onSubmit: values => {
             dispatch(RegisterUserTC(values.email, values.password))
         },
     });
+
+    useEffect(()=>{
+     return ()=>{
+         dispatch(RegisterUserAC(false))
+     }
+    },[])
 
     if (isRegistered) {
         return <Redirect to={login}/>

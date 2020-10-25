@@ -1,23 +1,25 @@
 import React from 'react';
-import {Input} from "../../common/Input/Input";
-import {useFormik} from "formik";
-import {Button} from "../../common/Button/Button";
+import {Input} from '../../common/Input/Input';
+import {useFormik} from 'formik';
+import {Button} from '../../common/Button/Button';
 import {
     InitialStateType,
     passwordRecoveryTC,
     SaveServerErrorAC,
     SaveServerResponseAC,
-} from "../../../m2-bll/reducers/passwordRecoveryReducer";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../../m2-bll/store";
-import {dataInForgotType} from "../../../m3-dal/api";
-import style from "./PasswordRecovery.module.css"
-import {Loader} from "../../common/Loader/Loader";
-
+} from '../../../m2-bll/reducers/passwordRecoveryReducer';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../../m2-bll/store';
+import {dataInForgotType} from '../../../m3-dal/api';
+import style from './PasswordRecovery.module.css'
+import {Loader} from '../../common/Loader/Loader';
+import {validatePasswordRecoveryForm} from '../../../m4-utils/validators/validators';
+import {RequestStatusType} from '../../../m2-bll/reducers/registerReducer';
 
 export const PasswordRecovery = () => {
 
-    const {serverResponse, serverError, status} = useSelector<RootState, InitialStateType>(state => state.passwordRecover)
+    const {serverResponse, serverError} = useSelector<RootState, InitialStateType>(state => state.passwordRecover)
+    const status = useSelector<RootState,RequestStatusType>(state =>state.loader.status )
     const dispatch = useDispatch()
 
     const clearServerResponseAndError = () => {
@@ -36,21 +38,15 @@ export const PasswordRecovery = () => {
         dispatch(passwordRecoveryTC(dataInForgot))
     }
 
-    const validate = (values: { email: string }) => {
-        const errors: { email?: string } = {};
-        if (!values.email) {
-            errors.email = 'Required';
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-            errors.email = 'Invalid email address';
-        }
-        return errors;
-    }
-
     const formik = useFormik({
         initialValues: {
             email: ''
         },
-        validate,
+        validate : (values: { email: string }) => {
+            const errors: { email?: string } = {};
+            validatePasswordRecoveryForm(values,errors)
+            return errors;
+        },
         onSubmit,
     });
 

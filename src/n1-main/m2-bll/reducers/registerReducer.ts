@@ -1,23 +1,21 @@
 import {Dispatch} from 'redux';
 import {registrationAPI} from '../../m3-dal/api';
+import {SetStatusAC} from './loaderReducer';
 
-const InitialState : InitialStateType = {
+const InitialState: InitialStateType = {
     isRegistered: false,
     serverError: '',
     status: 'idle'
 }
 
-export const registerReducer = (state = InitialState, action: ActionsType) : InitialStateType => {
+export const registerReducer = (state = InitialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case 'REGISTER_USER': {
             return {
                 ...state,
-                isRegistered : action.isRegistered,
+                isRegistered: action.isRegistered,
                 serverError: action.error ? action.error : ''
             }
-        }
-        case 'SET_STATUS': {
-            return {...state,status : action.status}
         }
         default :
             return state
@@ -25,22 +23,20 @@ export const registerReducer = (state = InitialState, action: ActionsType) : Ini
 }
 
 //actions
-export const RegisterUserAC = (isRegistered : boolean, error= '') =>
-    ({type: 'REGISTER_USER',isRegistered,error} as const);
-export const SetStatusAC = (status: RequestStatusType) =>
-    ({type: 'SET_STATUS',status} as const);
+export const RegisterUserAC = (isRegistered: boolean, error = '') =>
+    ({type: 'REGISTER_USER', isRegistered, error} as const);
 
 //thunks
-export const RegisterUserTC = (email: string,password: string) => (dispatch: Dispatch) => {
-            dispatch(SetStatusAC('loading'));
-    registrationAPI(email, password)
+export const RegisterUserTC = (email: string, password: string) => (dispatch: Dispatch) => {
+    dispatch(SetStatusAC('loading'));
+    registrationAPI.registration(email, password)
         .then(res => {
             dispatch(SetStatusAC('succeeded'));
             dispatch(RegisterUserAC(true));
         })
         .catch(error => {
             dispatch(SetStatusAC('failed'));
-            dispatch(RegisterUserAC(false,error.response.data.error));
+            dispatch(RegisterUserAC(false, error.response.data.error));
         })
 }
 
