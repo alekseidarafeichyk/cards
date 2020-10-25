@@ -1,16 +1,16 @@
 import React from 'react';
 import {useFormik} from 'formik';
-import {Input} from '../../common/Input/Input';
-import {Button} from '../../common/Button/Button';
+import {Input} from '../../../common/Input/Input';
+import {Button} from '../../../common/Button/Button';
 import {useDispatch, useSelector} from 'react-redux';
-import {LogIn} from '../../../m2-bll/reducers/loginReducer';
-import {RootState} from '../../../m2-bll/store';
+import {LogIn} from '../../../../m2-bll/reducers/loginReducer';
+import {RootState} from '../../../../m2-bll/store';
 import {Redirect} from 'react-router-dom';
 import style from './Login.module.css'
-import {profile} from '../../routes/RoutePass';
-import {validateLoginForm} from '../../../m4-utils/validators/validators';
-import {Loader} from '../../common/Loader/Loader';
-import {RequestStatusType} from '../../../m2-bll/reducers/registerReducer';
+import {profile} from '../../../routes/RoutePass';
+import {validateLoginForm} from '../../../../m4-utils/validators/validators';
+import {Loader} from '../../../common/Loader/Loader';
+import {RequestStatusType} from '../../../../m2-bll/reducers/registerReducer';
 
 export type AuthData = {
     email?: string

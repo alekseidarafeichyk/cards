@@ -1,13 +1,13 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../../m2-bll/store';
+import {RootState} from '../../../../m2-bll/store';
 import {Redirect} from 'react-router-dom';
-import {login} from '../../routes/RoutePass';
-import {AuthResponseType} from '../../../m3-dal/api';
-import {Button} from '../../common/Button/Button';
-import {LogOut} from '../../../m2-bll/reducers/loginReducer';
-import {RequestStatusType} from '../../../m2-bll/reducers/registerReducer';
-import {Loader} from '../../common/Loader/Loader';
+import {login} from '../../../routes/RoutePass';
+import {AuthResponseType} from '../../../../m3-dal/api';
+import {Button} from '../../../common/Button/Button';
+import {LogOut} from '../../../../m2-bll/reducers/loginReducer';
+import {RequestStatusType} from '../../../../m2-bll/reducers/registerReducer';
+import {Loader} from '../../../common/Loader/Loader';
 
 export const Profile = () => {
     const isAuth = useSelector<RootState, boolean>(state => state.login.isAuth)

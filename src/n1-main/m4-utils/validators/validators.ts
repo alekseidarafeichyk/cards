@@ -1,5 +1,5 @@
-import {RegisterErrorType} from '../../m1-ui/Main/Pages/Register';
-import {AuthData} from '../../m1-ui/Main/Pages/Login';
+import {RegisterErrorType} from '../../m1-ui/Main/Pages/p2-register/Register';
+import {AuthData} from '../../m1-ui/Main/Pages/p1-login/Login';
 
 type valuesRegisterForm = {
     email : string

@@ -1,20 +1,20 @@
 import React from 'react';
-import {Input} from '../../common/Input/Input';
+import {Input} from '../../../common/Input/Input';
 import {useFormik} from 'formik';
-import {Button} from '../../common/Button/Button';
+import {Button} from '../../../common/Button/Button';
 import {
     InitialStateType,
     passwordRecoveryTC,
     SaveServerErrorAC,
     SaveServerResponseAC,
-} from '../../../m2-bll/reducers/passwordRecoveryReducer';
+} from '../../../../m2-bll/reducers/passwordRecoveryReducer';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../../m2-bll/store';
-import {dataInForgotType} from '../../../m3-dal/api';
+import {RootState} from '../../../../m2-bll/store';
+import {dataInForgotType} from '../../../../m3-dal/api';
 import style from './PasswordRecovery.module.css'
-import {Loader} from '../../common/Loader/Loader';
-import {validatePasswordRecoveryForm} from '../../../m4-utils/validators/validators';
-import {RequestStatusType} from '../../../m2-bll/reducers/registerReducer';
+import {Loader} from '../../../common/Loader/Loader';
+import {validatePasswordRecoveryForm} from '../../../../m4-utils/validators/validators';
+import {RequestStatusType} from '../../../../m2-bll/reducers/registerReducer';
 
 export const PasswordRecovery = () => {
 
