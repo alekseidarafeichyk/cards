@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {dataInForgotType, forgotAPI} from "../../m3-dal/api";
+import {forgotAPI} from "../../m3-dal/api";
 import {SetStatusAC} from './loaderReducer';
 
 const InitialState: InitialStateType = {
@@ -35,12 +35,12 @@ export const setEmailToChangePasswordAC = (email: string) => ({type: 'EMAIL_TO_C
 export const SaveServerResponseAC = (answer: string) => ({type: 'SAVE_SERVER_RESPONSE', answer} as const)
 export const SaveServerErrorAC = (error: string) => ({type: 'SAVE_SERVER_ERROR', error} as const)
 
-export const passwordRecoveryTC = (dataInForgot: dataInForgotType) => (dispatch: Dispatch) => {
+export const passwordRecoveryTC = (email: string) => (dispatch: Dispatch) => {
     dispatch(SetStatusAC("loading"))
-    forgotAPI.forgot(dataInForgot)
+    forgotAPI.forgot(email)
         .then((res) => {
             dispatch(SetStatusAC("succeeded"))
-            dispatch(setEmailToChangePasswordAC(dataInForgot.email))
+            dispatch(setEmailToChangePasswordAC(email))
             dispatch(SaveServerResponseAC(res.data.info))
         })
         .catch((err: serverErrorType) => {
