@@ -22,8 +22,6 @@ export type RegisterErrorType = {
     repeatPassword?: string
 }
 
-
-
 export const Register = () => {
     const dispatch = useDispatch();
     const {isRegistered, serverError} = useSelector<RootState, InitialStateType>(state => state.register)
