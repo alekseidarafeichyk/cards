@@ -57,11 +57,6 @@ export type AuthUserData = {
     password: string
     rememberMe: boolean
 }
-export type dataInForgotType = {
-    email: string
-    from: string
-    message: string
-}
 type ResponseType = {
     info: string
     success: boolean
