@@ -4,16 +4,31 @@ import {Link} from 'react-router-dom';
 import Styles from './Table.module.css'
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../m2-bll/store';
-import {cardPack, getSetPacks} from '../../../m2-bll/reducers/packsReducer';
+import {addingPackTC, cardPack, deletePackTC, getSetPacks, updatePackTC} from '../../../m2-bll/reducers/packsReducer';
 
 
-export const Table = React.memo(() => {
+export const Table = () => {
+
+    const newName = "new checked name"
+
     const packs = useSelector<RootState, Array<cardPack>>(state => state.packs.cardPacks)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getSetPacks())
     }, [dispatch])
+
+    const onClickAddPack = () => {
+        dispatch(addingPackTC())
+    }
+
+    const onClickDeletePack = (id: string | null) => {
+        dispatch(deletePackTC(id))
+    }
+
+    const onClickUpdatePack = (id: string | null, newName: string) => {
+        dispatch(updatePackTC(id, newName))
+    }
 
     const renderRows = () => packs.map(row =>
         <tr key={row._id}>
@@ -22,10 +37,10 @@ export const Table = React.memo(() => {
             <td>{row.updated}</td>
             <td>''</td>
             <td>
-                <button>delete</button>
+                <button onClick={() => onClickDeletePack(row._id)}>delete</button>
             </td>
             <td>
-                <button>update</button>
+                <button onClick={() => onClickUpdatePack(row._id, newName)}>update</button>
             </td>
             <td><Link to={'#'}>cards</Link></td>
         </tr>
@@ -43,7 +58,7 @@ export const Table = React.memo(() => {
                 <th>Update</th>
                 <th>Url</th>
                 <th>
-                    <button>add</button>
+                    <button onClick={onClickAddPack}>Add</button>
                 </th>
                 <th></th>
                 <th></th>
@@ -54,4 +69,4 @@ export const Table = React.memo(() => {
             </tbody>
         </table>
     );
-})
+}

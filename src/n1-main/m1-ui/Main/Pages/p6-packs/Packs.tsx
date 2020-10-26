@@ -5,19 +5,22 @@ import {useFormik} from "formik";
 import {Input} from "../../../common/Input/Input";
 import {Button} from "../../../common/Button/Button";
 import style from "./Packs.module.css"
+import {useDispatch} from "react-redux";
+import {getPacksSearchTC} from "../../../../m2-bll/reducers/packsReducer";
 
 
 export const Packs = () => {
-    const [value, setValue] =  useState([0, 100])
+
+    let dispatch = useDispatch()
+
+    const [value, setValue] = useState([0, 100])
 
     const formik = useFormik({
         initialValues: {
             search: ''
         },
         onSubmit: values => {
-            alert(values.search)
-            alert(value[0])
-            alert(value[1])
+            dispatch(getPacksSearchTC(values.search, value[0], value[1]))
         }
     });
 

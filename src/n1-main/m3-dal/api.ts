@@ -37,9 +37,21 @@ export const forgotAPI = {
 }
 
 export const packsAPI = {
-    getPacks(pageCount = 1000, page = 4, sortPacks = '0updated') {
+    getPacks(pageCount = 10, page = 4, sortPacks = '0updated') {
         return instance.get(`/cards/pack?pageCount=${pageCount}&page=${4}&sortPacks=${sortPacks}`)
-    }
+    },
+    getPacksSearch(packName = "", min = 2, max = 9) {
+        return instance.get(`/cards/pack?packName=${packName}&min=${min}&max=${max}&pageCount=${10}`)
+    },
+    addPack() {
+        return instance.post('/cards/pack', {cardsPack: {name: "check adding"}})
+    },
+    deletePack(id: string | null) {
+        return instance.delete(`/cards/pack?id=${id}`)
+    },
+    updatePack(id: string | null, name: string) {
+        return instance.put('/cards/pack', {cardsPack: {_id: id, name}})
+    },
 }
 
 
