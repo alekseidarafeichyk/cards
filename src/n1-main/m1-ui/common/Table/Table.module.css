@@ -1,0 +1,57 @@
+.table {
+    width: 100%;
+    font-size: 1.1rem;
+    margin-top: 1em;
+    border-spacing: 0;
+}
+
+tbody td {
+    border-bottom: 1px solid #afadad;
+
+}
+
+tbody tr:nth-child(2n) {
+   background: #f3f3f3;
+
+}
+
+tbody button {
+    background: #26c17e;
+    color: #fff;
+    font-weight: bold;
+    border: #fff;
+    font-size: 1rem;
+    padding: .5em;
+}
+
+tbody a {color: #26c17e }
+
+thead {
+    background: #26c17e;
+    color: #fff;
+
+}
+
+thead th {
+    padding: 1em;
+}
+
+thead button {
+    background: #fff;
+    border: none;
+    color: #26c17e;
+    font-weight: bold;
+    padding: .5em;
+}
+
+tr, td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 1em;
+
+}
+
+
+.arrow{
+    margin-left: 1em;
+}
