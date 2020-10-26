@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import Styles from './Table.module.css'
@@ -7,13 +7,13 @@ import {RootState} from '../../../m2-bll/store';
 import {cardPack, getSetPacks} from '../../../m2-bll/reducers/packsReducer';
 
 
-export const Table = () => {
+export const Table = React.memo(() => {
     const packs = useSelector<RootState, Array<cardPack>>(state => state.packs.cardPacks)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getSetPacks())
-    }, [])
+    }, [dispatch])
 
     const renderRows = () => packs.map(row =>
         <tr key={row._id}>
@@ -54,4 +54,4 @@ export const Table = () => {
             </tbody>
         </table>
     );
-};
+})
