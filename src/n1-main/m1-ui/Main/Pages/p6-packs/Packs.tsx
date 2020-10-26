@@ -8,7 +8,7 @@ import style from "./Packs.module.css"
 
 
 export const Packs = () => {
-    const [value, setValue] = useState([0, 100])
+    const [value, setValue] =  useState([0, 100])
 
     const formik = useFormik({
         initialValues: {
