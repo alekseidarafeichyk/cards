@@ -1,21 +1,33 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import {useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import Styles from './Table.module.css'
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../../m2-bll/store';
+import {cardPack, getSetPacks} from '../../../m2-bll/reducers/packsReducer';
 
-type Props = {
-    data: Array<any>
-}
 
-export const Table = ({data}: Props) => {
-    const renderRows = () => data.map(row =>
-        <tr>
+export const Table = () => {
+    const packs = useSelector<RootState, Array<cardPack>>(state => state.packs.cardPacks)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getSetPacks())
+    }, [])
+
+    const renderRows = () => packs.map(row =>
+        <tr key={row._id}>
             <td>{row.name}</td>
             <td>{row.cardsCount}</td>
-            <td>{row.update}</td>
-            <td>{row.url}</td>
-            <td><button>delete</button></td>
-            <td><button>update</button></td>
-            <td><Link to={"#"}>cards</Link></td>
+            <td>{row.updated}</td>
+            <td>''</td>
+            <td>
+                <button>delete</button>
+            </td>
+            <td>
+                <button>update</button>
+            </td>
+            <td><Link to={'#'}>cards</Link></td>
         </tr>
     )
     return (

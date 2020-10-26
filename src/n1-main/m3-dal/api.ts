@@ -28,7 +28,7 @@ export const forgotAPI = {
     forgot(email: string) {
         return instance.post<ResponseType>('/auth/forgot', {
             email: email,
-            from: "test-front-admin",
+            from: 'test-front-admin',
             message: `<div style="background-color: gold; padding: 15px">Password recover link:
                     <a href="https://alekseidarafeichyk.github.io/cards/#/new_password/$token$">link</a>
                 </div>`
@@ -36,31 +36,33 @@ export const forgotAPI = {
     }
 }
 
+export const packsAPI = {
+    getPacks(pageCount = 1000, page = 4, sortPacks = '0updated') {
+        return instance.get(`/cards/pack?pageCount=${pageCount}&page=${4}&sortPacks=${sortPacks}`)
+    }
+}
+
+
 // Types
 export type AuthResponseType = {
-    _id:string,
-    email:string,
-    rememberMe:boolean,
-    isAdmin:boolean,
-    name:string,
-    verified:boolean,
-    publicCardPacksCount:number,
-    created:string,
-    updated:string,
-    __v:number,
-    token:string,
+    _id: string,
+    email: string,
+    rememberMe: boolean,
+    isAdmin: boolean,
+    name: string,
+    verified: boolean,
+    publicCardPacksCount: number,
+    created: string,
+    updated: string,
+    __v: number,
+    token: string,
     tokenDeathTime: number
-    avatar? : string
+    avatar?: string
 }
 export type AuthUserData = {
     email: string
     password: string
     rememberMe: boolean
-}
-export type dataInForgotType = {
-    email: string
-    from: string
-    message: string
 }
 type ResponseType = {
     info: string

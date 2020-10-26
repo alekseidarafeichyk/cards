@@ -6,6 +6,7 @@ import {passwordRecoveryReducer} from './reducers/passwordRecoveryReducer';
 import {registerReducer} from './reducers/registerReducer';
 import {profileReducer} from './reducers/profileReducer';
 import {loaderReducer} from './reducers/loaderReducer';
+import {packsReducer} from './reducers/packsReducer';
 
 let reducers = combineReducers({
     login: loginReducer,
@@ -13,7 +14,8 @@ let reducers = combineReducers({
     passwordRecover : passwordRecoveryReducer,
     register: registerReducer,
     profile: profileReducer,
-    loader: loaderReducer
+    loader: loaderReducer,
+    packs: packsReducer
 })
 
 export type RootState = ReturnType<typeof reducers>
