@@ -45,6 +45,7 @@ export const Table = () => {
             <td><Link to={'#'}>cards</Link></td>
         </tr>
     )
+
     return (
         <table className={Styles.table}>
             <thead>
