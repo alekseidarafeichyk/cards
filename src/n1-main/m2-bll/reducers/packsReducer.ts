@@ -37,6 +37,10 @@ export const packsReducer = (state = InitialState, action: ActionsType): Initial
             return {...state, ...action.packs}
         case "ADD_PACK":
             return {...state, cardPacks: [action.pack, ...state.cardPacks]}
+        case "DELETE_PACK":
+
+            return {...state,
+                cardPacks: state.cardPacks.filter(card => card._id !== action.id && card)}
         case "UPDATE_PACK":
             return {
                 ...state,
@@ -50,6 +54,7 @@ export const packsReducer = (state = InitialState, action: ActionsType): Initial
 //actions
 export const setPacks = (packs: InitialStateType) => ({type: 'SET_PACKS', packs} as const)
 export const addingPackAC = (pack: cardPack) => ({type: 'ADD_PACK', pack} as const)
+export const deletePackAC = (id: string | null) => ({type: 'DELETE_PACK', id} as const)
 export const updatePackAC = (id: string | null, name: string) => ({type: 'UPDATE_PACK', id, name} as const)
 
 //thunks
@@ -83,10 +88,10 @@ export const addingPackTC = () => (dispatch: Dispatch) => {
         })
 }
 
-export const deletePackTC = (id: string | null) => () => {
+export const deletePackTC = (id: string | null) => (dispatch: Dispatch) => {
     packsAPI.deletePack(id)
         .then((res) => {
-            console.log(res)
+           dispatch(deletePackAC(id))
         })
         .catch((err) => {
             console.log({...err})
@@ -136,6 +141,7 @@ type ActionsType =
     | ReturnType<typeof setPacks>
     | ReturnType<typeof addingPackAC>
     | ReturnType<typeof updatePackAC>
+    | ReturnType<typeof deletePackAC>
 
 
 type resType = {
