@@ -1,22 +1,18 @@
 import React from 'react';
-import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import Styles from './Table.module.css'
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../m2-bll/store';
-import {addingPackTC, cardPack, deletePackTC, getSetPacks, updatePackTC} from '../../../m2-bll/reducers/packsReducer';
+import {addingPackTC, cardPack, deletePackTC, updatePackTC} from '../../../m2-bll/reducers/packsReducer';
 
 
 export const Table = () => {
 
-    const newName = "new checked name"
+    const newName = 'new checked name'
 
     const packs = useSelector<RootState, Array<cardPack>>(state => state.packs.cardPacks)
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getSetPacks())
-    }, [dispatch])
 
     const onClickAddPack = () => {
         dispatch(addingPackTC())

@@ -1,5 +1,6 @@
 import {Dispatch} from 'redux';
 import {packsAPI} from '../../m3-dal/api';
+import {setDataPaginator} from './paginatorReducer';
 
 const InitialState: InitialStateType = {
     cardPacks: [{
@@ -21,9 +22,9 @@ const InitialState: InitialStateType = {
         deckCover: null
     },
     ],
-    page: null,
-    pageCount: null,
-    cardPacksTotalCount: null,
+    page: 0,
+    pageCount: 0,
+    cardPacksTotalCount: 0,
     minCardsCount: null,
     maxCardsCount: null,
     token: null,
@@ -53,10 +54,16 @@ export const addingPackAC = (pack: cardPack) => ({type: 'ADD_PACK', pack} as con
 export const updatePackAC = (id: string | null, name: string) => ({type: 'UPDATE_PACK', id, name} as const)
 
 //thunks
-export const getSetPacks = () => (dispatch: Dispatch) => {
-    packsAPI.getPacks()
+export const getSetPacks = (portionPacks?: number,pageNumber?: number) => (dispatch: Dispatch) => {
+    packsAPI.getPacks(portionPacks,pageNumber)
         .then(res => {
             dispatch(setPacks(res.data))
+
+            const currentPage = res.data.page
+            const portion = res.data.pageCount
+            const pageCount = Math.ceil(res.data.cardPacksTotalCount/ portion)
+
+            dispatch(setDataPaginator(currentPage,portion,pageCount))
         })
         .catch((err) => {
             alert(err)
@@ -106,9 +113,9 @@ export const updatePackTC = (id: string | null, name: string) => (dispatch: Disp
 // types
 export type InitialStateType = {
     cardPacks: Array<cardPack>
-    page: number | null
-    pageCount: number | null
-    cardPacksTotalCount: number | null
+    page: number
+    pageCount: number
+    cardPacksTotalCount: number
     minCardsCount: number | null
     maxCardsCount: number | null
     token: string | null

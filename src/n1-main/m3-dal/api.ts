@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {InitialStateType} from '../m2-bll/reducers/packsReducer';
 
 const instance = axios.create({
     withCredentials: true,
@@ -37,8 +38,8 @@ export const forgotAPI = {
 }
 
 export const packsAPI = {
-    getPacks(pageCount = 10, page = 4, sortPacks = '0updated') {
-        return instance.get(`/cards/pack?pageCount=${pageCount}&page=${4}&sortPacks=${sortPacks}`)
+    getPacks(pageCount = 10, page = 1, sortPacks = '0updated') {
+        return instance.get<InitialStateType>(`/cards/pack?pageCount=${pageCount}&page=${page}&sortPacks=${sortPacks}`)
     },
     getPacksSearch(packName = "", min = 2, max = 9) {
         return instance.get(`/cards/pack?packName=${packName}&min=${min}&max=${max}&pageCount=${10}`)
