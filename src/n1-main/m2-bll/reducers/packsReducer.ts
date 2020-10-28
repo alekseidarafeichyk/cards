@@ -35,8 +35,15 @@ export const packsReducer = (state = InitialState, action: ActionsType): Initial
     switch (action.type) {
         case 'SET_PACKS':
             return {...state, ...action.packs}
+        case "SET_MY_PACKS":
+            return {...state, ...action.packs}
         case "ADD_PACK":
             return {...state, cardPacks: [action.pack, ...state.cardPacks]}
+        case "DELETE_PACK":
+            return {
+                ...state,
+                cardPacks: state.cardPacks.filter((card) => card._id !== action.id)
+            }
         case "UPDATE_PACK":
             return {
                 ...state,
@@ -49,14 +56,26 @@ export const packsReducer = (state = InitialState, action: ActionsType): Initial
 
 //actions
 export const setPacks = (packs: InitialStateType) => ({type: 'SET_PACKS', packs} as const)
+export const setMyPacks = (packs: InitialStateType) => ({type: 'SET_MY_PACKS', packs} as const)
 export const addingPackAC = (pack: cardPack) => ({type: 'ADD_PACK', pack} as const)
 export const updatePackAC = (id: string | null, name: string) => ({type: 'UPDATE_PACK', id, name} as const)
+export const deleteAC = (id: string | null) => ({type: 'DELETE_PACK', id} as const)
 
 //thunks
 export const getSetPacks = () => (dispatch: Dispatch) => {
     packsAPI.getPacks()
         .then(res => {
             dispatch(setPacks(res.data))
+        })
+        .catch((err) => {
+            alert(err)
+        })
+}
+
+export const getMyPacksTC = (userID: string) => (dispatch: Dispatch) => {
+    packsAPI.getMyPacks(userID)
+        .then(res => {
+            dispatch(setMyPacks(res.data))
         })
         .catch((err) => {
             alert(err)
@@ -75,7 +94,7 @@ export const getPacksSearchTC = (packName: string, min: number, max: number) => 
 
 export const addingPackTC = () => (dispatch: Dispatch) => {
     packsAPI.addPack()
-        .then((res: resType) => {
+        .then((res) => {
             dispatch(addingPackAC(res.data.newCardsPack))
         })
         .catch((err) => {
@@ -83,9 +102,10 @@ export const addingPackTC = () => (dispatch: Dispatch) => {
         })
 }
 
-export const deletePackTC = (id: string | null) => () => {
+export const deletePackTC = (id: string | null) => (dispatch: Dispatch) => {
     packsAPI.deletePack(id)
         .then((res) => {
+            dispatch(deleteAC(res.data.deletedCardsPack._id))
             console.log(res)
         })
         .catch((err) => {
@@ -96,6 +116,7 @@ export const deletePackTC = (id: string | null) => () => {
 export const updatePackTC = (id: string | null, name: string) => (dispatch: Dispatch) => {
     packsAPI.updatePack(id, name)
         .then((res) => {
+            console.log(res)
             dispatch(updatePackAC(id, name))
         })
         .catch((err) => {
@@ -136,11 +157,5 @@ type ActionsType =
     | ReturnType<typeof setPacks>
     | ReturnType<typeof addingPackAC>
     | ReturnType<typeof updatePackAC>
-
-
-type resType = {
-    data: newCardsPackType
-}
-type newCardsPackType = {
-    newCardsPack: cardPack
-}
+    | ReturnType<typeof setMyPacks>
+    | ReturnType<typeof deleteAC>
