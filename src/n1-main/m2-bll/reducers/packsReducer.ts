@@ -42,12 +42,12 @@ export const packsReducer = (state = InitialState, action: ActionsType): Initial
         case "DELETE_PACK":
             return {
                 ...state,
-                cardPacks: state.cardPacks.filter((card) => card._id !== action.id)
+                cardPacks: state.cardPacks.filter((pack) => pack._id !== action.id)
             }
         case "UPDATE_PACK":
             return {
                 ...state,
-                cardPacks: state.cardPacks.map((card) => card._id === action.id ? {...card, name: action.name} : card)
+                cardPacks: state.cardPacks.map((pack) => pack._id === action.id ? {...pack, name: action.name} : pack)
             }
         default :
             return state
