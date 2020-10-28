@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {cardPack} from "../m2-bll/reducers/packsReducer";
+import {InitialStateType} from '../m2-bll/reducers/packsReducer';
 
 const instance = axios.create({
     withCredentials: true,
@@ -39,7 +40,7 @@ export const forgotAPI = {
 
 export const packsAPI = {
     getPacks(pageCount = 10, page = 1, sortPacks = '0updated') {
-        return instance.get(`/cards/pack?pageCount=${pageCount}&page=${page}&sortPacks=${sortPacks}`)
+        return instance.get<InitialStateType>(`/cards/pack?pageCount=${pageCount}&page=${page}&sortPacks=${sortPacks}`)
     },
     getMyPacks(userID = "", pageCount = 10, page = 1,) {
         return instance.get(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userID}`)
@@ -48,10 +49,10 @@ export const packsAPI = {
         return instance.get(`/cards/pack?packName=${packName}&min=${min}&max=${max}&pageCount=${10}`)
     },
     addPack() {
-        return instance.post<ResponseNewPackType>('/cards/pack', {cardsPack: {name: "check adding"}})
+        return instance.post('/cards/pack', {cardsPack: {name: "check adding"}})
     },
     deletePack(id: string | null) {
-        return instance.delete<ResponseDeletedPackType>(`/cards/pack?id=${id}`)
+        return instance.delete(`/cards/pack?id=${id}`)
     },
     updatePack(id: string | null, name: string) {
         return instance.put('/cards/pack', {cardsPack: {_id: id, name}})

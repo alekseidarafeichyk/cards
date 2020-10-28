@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Table} from "../../../common/Table/Table";
 import {CommonSlider} from "../../../common/CommonSlider/CommonSlider";
 import {useFormik} from "formik";
@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getMyPacksTC, getPacksSearchTC, getSetPacks} from "../../../../m2-bll/reducers/packsReducer";
 import {Checkbox} from '@material-ui/core';
 import {RootState} from "../../../../m2-bll/store";
-
+import {Paginator} from './Paginator/Paginator';
 
 export const Packs = () => {
 
@@ -17,6 +17,10 @@ export const Packs = () => {
 
     const userID = useSelector<RootState, string>(state => state.profile._id)
     let dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getSetPacks())
+    }, [dispatch])
 
     const [value, setValue] = useState([0, 100])
     const [checked, setChecked] = useState(false)
@@ -39,6 +43,7 @@ export const Packs = () => {
             dispatch(getPacksSearchTC(values.search, value[0], value[1]))
         }
     });
+
     return (
         <>
             <form onSubmit={formik.handleSubmit} className={style.formStyle}>
@@ -59,6 +64,7 @@ export const Packs = () => {
             <div><Checkbox checked={checked} onChange={ChangeCheckbox}/>My cards</div>
             <h1>Packs</h1>
             <Table/>
+            <Paginator/>
         </>
     )
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import Styles from './Table.module.css'
 import {useDispatch, useSelector} from 'react-redux';
@@ -24,9 +23,6 @@ export const Table = React.memo(() => {
     const packs = useSelector<RootState, Array<cardPack>>(state => state.packs.cardPacks)
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getSetPacks())
-    }, [dispatch])
 
     const onClickAddPack = () => {
         dispatch(addingPackTC())
@@ -62,10 +58,9 @@ export const Table = React.memo(() => {
             <td>
                 <button onClick={() => onClickUpdatePack(row._id, newName)}>update</button>
             </td>
-            <td><Link to={'/cards'}>cards</Link></td>
+            <td><Link to={'#'}>cards</Link></td>
         </tr>
     )
-
     return (
         <table className={Styles.table}>
             <thead>
@@ -73,8 +68,8 @@ export const Table = React.memo(() => {
                 <th>Name</th>
                 <th>
                     CardsCount
-                    <button className={Styles.arrow} onClick={() => onClickDescendingSort()}>/\</button>
-                    <button className={Styles.arrow} onClick={() => onClickAscendingSort()}>\/</button>
+                    <button className={Styles.arrow}>/\</button>
+                    <button className={Styles.arrow}>\/</button>
                 </th>
                 <th>Update</th>
                 <th>Url</th>
@@ -90,4 +85,4 @@ export const Table = React.memo(() => {
             </tbody>
         </table>
     );
-})
+}

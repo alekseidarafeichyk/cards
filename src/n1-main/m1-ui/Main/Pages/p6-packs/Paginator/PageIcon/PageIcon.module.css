@@ -1,0 +1,11 @@
+.pageNumber {
+    border: 1px solid green;
+    padding: 5px;
+}
+.containerPages {
+    padding: 2px;
+    margin: 10px;
+}
+.active {
+    font-weight: bold;
+}
