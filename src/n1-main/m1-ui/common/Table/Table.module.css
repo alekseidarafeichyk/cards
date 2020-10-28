@@ -5,6 +5,14 @@
     border-spacing: 0;
 }
 
+.table button {
+    cursor: pointer;
+}
+
+.table button:focus {
+    outline: none;
+}
+
 tbody td {
     border-bottom: 1px solid #afadad;
 

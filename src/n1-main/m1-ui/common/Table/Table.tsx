@@ -4,7 +4,15 @@ import {Link} from 'react-router-dom';
 import Styles from './Table.module.css'
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../m2-bll/store';
-import {addingPackTC, cardPack, deletePackTC, getSetPacks, updatePackTC} from '../../../m2-bll/reducers/packsReducer';
+import {
+    addingPackTC,
+    cardPack,
+    deletePackTC,
+    getSetPacks,
+    updatePackTC,
+    desSortAC,
+    ascendSortAC
+} from '../../../m2-bll/reducers/packsReducer';
 
 
 export const Table = React.memo(() => {
@@ -32,6 +40,16 @@ export const Table = React.memo(() => {
         dispatch(updatePackTC(id, newName))
     }
 
+    const onClickDescendingSort = () => {
+        dispatch(desSortAC())
+
+    }
+
+    const onClickAscendingSort = () => {
+        dispatch(ascendSortAC())
+
+    }
+
     const renderRows = () => packs.map(row =>
         <tr key={row._id}>
             <td>{row.name}</td>
@@ -55,8 +73,8 @@ export const Table = React.memo(() => {
                 <th>Name</th>
                 <th>
                     CardsCount
-                    <button className={Styles.arrow}>/\</button>
-                    <button className={Styles.arrow}>\/</button>
+                    <button className={Styles.arrow} onClick={() => onClickDescendingSort()}>/\</button>
+                    <button className={Styles.arrow} onClick={() => onClickAscendingSort()}>\/</button>
                 </th>
                 <th>Update</th>
                 <th>Url</th>
