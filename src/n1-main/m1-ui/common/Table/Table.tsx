@@ -7,7 +7,7 @@ import {RootState} from '../../../m2-bll/store';
 import {addingPackTC, cardPack, deletePackTC, getSetPacks, updatePackTC} from '../../../m2-bll/reducers/packsReducer';
 
 
-export const Table = () => {
+export const Table = React.memo (() => {
 
     const newName = "new checked name"
 
@@ -61,8 +61,8 @@ export const Table = () => {
                 <th>
                     <button onClick={onClickAddPack}>Add</button>
                 </th>
-                <th></th>
-                <th></th>
+                <th> </th>
+                <th> </th>
             </tr>
             </thead>
             <tbody>
@@ -70,4 +70,4 @@ export const Table = () => {
             </tbody>
         </table>
     );
-}
+})

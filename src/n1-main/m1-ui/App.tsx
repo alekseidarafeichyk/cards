@@ -10,7 +10,7 @@ const App = () => {
 
     useEffect(() => {
         dispatch(authMe())
-    }, [])
+    }, [dispatch])
 
     return (
         <div className={'App'}>

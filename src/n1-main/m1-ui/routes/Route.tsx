@@ -1,13 +1,14 @@
 import React from 'react';
 import style from './Route.module.css'
 import {Route} from 'react-router-dom';
-import {login, newPassword, packs, passwordRecovery, profile, register} from './RoutePass';
+import {cards, login, newPassword, packs, passwordRecovery, profile, register} from './RoutePass';
 import {Login} from '../Main/Pages/p1-login/Login';
 import {Register} from '../Main/Pages/p2-register/Register';
 import {PasswordRecovery} from '../Main/Pages/p3-passwordRecovery/PasswordRecovery';
 import {NewPassword} from '../Main/Pages/p4-newPassword/NewPassword';
 import {Profile} from '../Main/Pages/p5-profile/Profile';
 import {Packs} from "../Main/Pages/p6-packs/Packs";
+import {Cards} from "../Main/Pages/p7-cards/Cards";
 
 export const Routes = () => {
     return (
@@ -18,6 +19,7 @@ export const Routes = () => {
             <Route path={newPassword} render={() => <NewPassword/>}/>
             <Route path={profile} render={() => <Profile/>}/>
             <Route path={packs} render={() => <Packs/>}/>
+            <Route path={cards} render={() => <Cards/>}/>
         </div>
     )
 }
