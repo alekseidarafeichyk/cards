@@ -38,9 +38,14 @@ export const packsReducer = (state = InitialState, action: ActionsType): Initial
         case "ADD_PACK":
             return {...state, cardPacks: [action.pack, ...state.cardPacks]}
         case "DELETE_PACK":
-
             return {...state,
-                cardPacks: state.cardPacks.filter(card => card._id !== action.id && card)}
+                cardPacks: state.cardPacks.filter(card => card._id !== action.id)}
+        case "DESCENDING_SORT":
+            return {...state,
+                cardPacks: [...state.cardPacks.sort((a:cardPack, b:cardPack) =>  b.cardsCount! - a.cardsCount!)]}
+        case "ASCENDING_SORT":
+            return {...state,
+                cardPacks: [...state.cardPacks.sort((a:cardPack, b:cardPack) => a.cardsCount! - b.cardsCount!)]}
         case "UPDATE_PACK":
             return {
                 ...state,
@@ -55,6 +60,8 @@ export const packsReducer = (state = InitialState, action: ActionsType): Initial
 export const setPacks = (packs: InitialStateType) => ({type: 'SET_PACKS', packs} as const)
 export const addingPackAC = (pack: cardPack) => ({type: 'ADD_PACK', pack} as const)
 export const deletePackAC = (id: string | null) => ({type: 'DELETE_PACK', id} as const)
+export const desSortAC = () => ({type: 'DESCENDING_SORT'} as const)
+export const ascendSortAC = () => ({type: 'ASCENDING_SORT'} as const)
 export const updatePackAC = (id: string | null, name: string) => ({type: 'UPDATE_PACK', id, name} as const)
 
 //thunks
@@ -142,6 +149,8 @@ type ActionsType =
     | ReturnType<typeof addingPackAC>
     | ReturnType<typeof updatePackAC>
     | ReturnType<typeof deletePackAC>
+    | ReturnType<typeof desSortAC>
+    | ReturnType<typeof ascendSortAC>
 
 
 type resType = {
