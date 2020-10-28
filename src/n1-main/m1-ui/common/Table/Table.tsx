@@ -85,4 +85,4 @@ export const Table = React.memo(() => {
             </tbody>
         </table>
     );
-}
+})
