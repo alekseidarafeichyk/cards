@@ -39,7 +39,7 @@ export const packsReducer = (state = InitialState, action: ActionsType): Initial
             return {...state, cardPacks: [action.pack, ...state.cardPacks]}
         case "DELETE_PACK":
             return {...state,
-                cardPacks: state.cardPacks.filter(card => card._id !== action.id)}
+                cardPacks: [...state.cardPacks.filter(card => card._id !== action.id)]}
         case "DESCENDING_SORT":
             return {...state,
                 cardPacks: [...state.cardPacks.sort((a:cardPack, b:cardPack) =>  b.cardsCount! - a.cardsCount!)]}
