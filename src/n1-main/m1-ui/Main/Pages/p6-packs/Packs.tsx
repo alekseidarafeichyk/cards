@@ -8,7 +8,6 @@ import style from "./Packs.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {
     getMyPacksSearchTC,
-    getMyPacksTC,
     getPacksSearchTC,
     getSetPacks
 } from "../../../../m2-bll/reducers/packsReducer";
@@ -17,35 +16,29 @@ import {RootState} from "../../../../m2-bll/store";
 import {Paginator} from './Paginator/Paginator';
 import {
     initialStateGetRequestType,
-    setCheckedMyPacksAC,
+    setCheckedMyPacksAC, setMaxAC, setMinAC, setPackNameAC, setSearchStatusAC,
 } from "../../../../m2-bll/reducers/dataForGetRequestReducer";
 
 export const Packs = () => {
 
     console.log("Packs rendering")
 
-    const {page, pageCount, cardPacksTotalCount, checkedMyPacks, ...rest} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
+    const {pageCount, checkedMyPacks, packName, min, max} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
     const userID = useSelector<RootState, string>(state => state.profile._id)
     let dispatch = useDispatch()
 
     useEffect(() => {
-        if (checkedMyPacks) {
-            debugger
-            dispatch(getMyPacksTC(userID, pageCount, page))
-        } else {
-            dispatch(getSetPacks())
-        }
-    },[dispatch])
+        dispatch(getSetPacks())
+    }, [dispatch])
 
     const [value, setValue] = useState([0, 100])
 
     const ChangeCheckbox = () => {
         if (!checkedMyPacks) {
-            debugger
-            dispatch(getMyPacksTC(userID, pageCount, page))
+            dispatch(getMyPacksSearchTC(userID, packName, min, max, pageCount))
             dispatch(setCheckedMyPacksAC(true))
         } else {
-            dispatch(getSetPacks())
+            dispatch(getPacksSearchTC(packName, min, max, pageCount))
             dispatch(setCheckedMyPacksAC(false))
         }
     }
@@ -55,10 +48,16 @@ export const Packs = () => {
             search: ''
         },
         onSubmit: values => {
+            dispatch(setSearchStatusAC(true))
             if (checkedMyPacks) {
+                dispatch(setPackNameAC(values.search))
+                dispatch(setMinAC(value[0]))
+                dispatch(setMaxAC(value[1]))
                 dispatch(getMyPacksSearchTC(userID, values.search, value[0], value[1], pageCount))
-
             } else {
+                dispatch(setPackNameAC(values.search))
+                dispatch(setMinAC(value[0]))
+                dispatch(setMaxAC(value[1]))
                 dispatch(getPacksSearchTC(values.search, value[0], value[1], pageCount))
             }
         }

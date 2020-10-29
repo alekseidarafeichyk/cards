@@ -4,9 +4,10 @@ const initialState: initialStateGetRequestType = {
     max: 20,
     sortPacks: "1updated",
     page: 1,
-    pageCount: 10,
+    pageCount: 4,
     checkedMyPacks: false,
     cardPacksTotalCount: 1,
+    searchStatus: false
 }
 
 
@@ -36,6 +37,9 @@ export const dataForGetRequestReducer = (state = initialState, action: ActionTyp
         case "SET_PACKS_TOTAL_COUNT": {
             return {...state, cardPacksTotalCount: action.TotalCount}
         }
+        case "SET_SEARCH_STATUS": {
+            return {...state, searchStatus: action.searchStatus}
+        }
         default:
             return state
     }
@@ -49,7 +53,8 @@ export const setSortPacksAC = (sortPacks: sortPacksType) => ({type: 'SET_SORT_PA
 export const setPageAC = (page: number) => ({type: 'SET_PAGE', page} as const)
 export const setPageCountAC = (pageCount: number) => ({type: 'SET_PAGE_COUNT', pageCount} as const)
 export const setCheckedMyPacksAC = (checked: boolean) => ({type: 'SET_CHECKED_MY_PACKS', checked} as const)
-export const setPacksTotalCountAC = (TotalCount: number ) => ({type: 'SET_PACKS_TOTAL_COUNT', TotalCount} as const)
+export const setPacksTotalCountAC = (TotalCount: number) => ({type: 'SET_PACKS_TOTAL_COUNT', TotalCount} as const)
+export const setSearchStatusAC = (searchStatus: boolean) => ({type: 'SET_SEARCH_STATUS', searchStatus} as const)
 
 // types
 export type initialStateGetRequestType = {
@@ -61,6 +66,7 @@ export type initialStateGetRequestType = {
     pageCount: number
     checkedMyPacks: boolean
     cardPacksTotalCount: number
+    searchStatus: boolean
 }
 export type sortPacksType = "1updated" | "0updated"
 
@@ -72,6 +78,7 @@ type ActionType = ReturnType<typeof setPackNameAC>
     | ReturnType<typeof setPageCountAC>
     | ReturnType<typeof setCheckedMyPacksAC>
     | ReturnType<typeof setPacksTotalCountAC>
+    | ReturnType<typeof setSearchStatusAC>
 
 
 
