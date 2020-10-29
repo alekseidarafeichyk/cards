@@ -8,9 +8,9 @@ import {
     cardPack,
     deletePackTC,
     updatePackTC,
-    desSortAC,
-    ascendSortAC
+    getPacksAndMyPacksWithSearchTC
 } from '../../../m2-bll/reducers/packsReducer';
+import {initialStateGetRequestType, setSortPacksAC} from "../../../m2-bll/reducers/dataForGetRequestReducer";
 
 
 export const Table = React.memo(() => {
@@ -18,7 +18,8 @@ export const Table = React.memo(() => {
     console.log("Table rendering")
 
     const newName = "new checked name"
-
+    const userID = useSelector<RootState, string>(state => state.profile._id)
+    const {page, pageCount, checkedMyPacks, packName, min, max} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
     const packs = useSelector<RootState, Array<cardPack>>(state => state.packs.cardPacks)
     const dispatch = useDispatch()
 
@@ -36,12 +37,22 @@ export const Table = React.memo(() => {
     }
 
     const onClickDescendingSort = () => {
-        dispatch(desSortAC())
+        dispatch(setSortPacksAC("0updated"))
+        if (checkedMyPacks) {
+            dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, pageCount, page, "0updated"))
+        } else {
+            dispatch(getPacksAndMyPacksWithSearchTC("", packName, min, max, pageCount, page, "0updated"))
+        }
 
     }
 
     const onClickAscendingSort = () => {
-        dispatch(ascendSortAC())
+        dispatch(setSortPacksAC("1updated"))
+        if (checkedMyPacks) {
+            dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, pageCount, page, "1updated"))
+        } else {
+            dispatch(getPacksAndMyPacksWithSearchTC("", packName, min, max, pageCount, page, "1updated"))
+        }
 
     }
 

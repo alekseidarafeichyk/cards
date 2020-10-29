@@ -1,8 +1,8 @@
 const initialState: initialStateGetRequestType = {
     packName: "",
     min: 0,
-    max: 20,
-    sortPacks: "1updated",
+    max: 100,
+    sortPacks: "0updated",
     page: 1,
     pageCount: 4,
     checkedMyPacks: false,
