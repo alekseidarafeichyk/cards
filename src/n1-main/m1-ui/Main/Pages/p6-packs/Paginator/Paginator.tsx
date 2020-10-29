@@ -3,10 +3,8 @@ import style from './Paginator.module.css'
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../../../m2-bll/store';
 import {
-    getMyPacksSearchTC,
-    getMyPacksTC,
-    getPacksSearchTC,
-    getSetPacks
+    getPacksAndMyPacksWithSearchTC,
+    getPacksAndMyPacksTC,
 } from '../../../../../m2-bll/reducers/packsReducer';
 import Pagination from '@material-ui/lab/Pagination';
 import {
@@ -28,15 +26,15 @@ export const Paginator = () => {
         dispatch(setPageCountAC(+e.currentTarget.value))
         if (checkedMyPacks) {
             if (searchStatus) {
-                dispatch(getMyPacksSearchTC(userID, packName, min, max, +e.currentTarget.value, page))
+                dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, +e.currentTarget.value, page))
             } else {
-                dispatch(getMyPacksTC(userID, +e.currentTarget.value, page))
+                dispatch(getPacksAndMyPacksTC(userID, +e.currentTarget.value, page))
             }
         } else {
             if (searchStatus) {
-                dispatch(getPacksSearchTC(packName, min, max, +e.currentTarget.value, page))
+                dispatch(getPacksAndMyPacksWithSearchTC("",packName, min, max, +e.currentTarget.value, page))
             } else {
-                dispatch(getSetPacks(+e.currentTarget.value, page))
+                dispatch(getPacksAndMyPacksTC("",+e.currentTarget.value, page))
             }
         }
     }
@@ -45,15 +43,15 @@ export const Paginator = () => {
         dispatch(setPageAC(page))
         if (checkedMyPacks) {
             if (searchStatus) {
-                dispatch(getMyPacksSearchTC(userID, packName, min, max, pageCount, page))
+                dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, pageCount, page))
             } else {
-                dispatch(getMyPacksTC(userID, pageCount, page))
+                dispatch(getPacksAndMyPacksTC(userID, pageCount, page))
             }
         } else {
             if (searchStatus) {
-                dispatch(getPacksSearchTC(packName, min, max, pageCount, page))
+                dispatch(getPacksAndMyPacksWithSearchTC("", packName, min, max, pageCount, page))
             } else {
-                dispatch(getSetPacks(pageCount, page))
+                dispatch(getPacksAndMyPacksTC("",pageCount, page))
             }
         }
     }

@@ -38,16 +38,10 @@ export const forgotAPI = {
 }
 
 export const packsAPI = {
-    getPacks(pageCount = 4, page = 1) {
-        return instance.get<InitialStateType>(`/cards/pack?pageCount=${pageCount}&page=${page}`)
-    },
-    getMyPacks(userID = "", pageCount = 4, page = 1) {
+    getPacksAndMyPacks(userID = "", pageCount = 4, page = 1) {
         return instance.get<InitialStateType>(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userID}`)
     },
-    getPacksSearch(packName = "", min = 0, max = 100, pageCount = 10, page: number | undefined) {
-        return instance.get<InitialStateType>(`/cards/pack?packName=${packName}&min=${min}&max=${max}&pageCount=${pageCount}&page=${page}`)
-    },
-    getMyPacksSearch(userID: string, packName = "", min = 0, max = 100, pageCount = 10, page: number | undefined) {
+    getPacksAndMyPacksWithSearch(userID: string | undefined, packName = "", min = 0, max = 100, pageCount = 10, page: number | undefined) {
         return instance.get<InitialStateType>(`/cards/pack?packName=${packName}&min=${min}&max=${max}&pageCount=${pageCount}&page=${page}&user_id=${userID}`)
     },
     addPack() {

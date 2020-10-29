@@ -7,9 +7,8 @@ import {Button} from "../../../common/Button/Button";
 import style from "./Packs.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {
-    getMyPacksSearchTC,
-    getPacksSearchTC,
-    getSetPacks
+    getPacksAndMyPacksWithSearchTC,
+    getPacksAndMyPacksTC,
 } from "../../../../m2-bll/reducers/packsReducer";
 import {Checkbox} from '@material-ui/core';
 import {RootState} from "../../../../m2-bll/store";
@@ -28,17 +27,17 @@ export const Packs = () => {
     let dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getSetPacks())
+        dispatch(getPacksAndMyPacksTC())
     }, [dispatch])
 
     const [value, setValue] = useState([0, 100])
 
     const ChangeCheckbox = () => {
         if (!checkedMyPacks) {
-            dispatch(getMyPacksSearchTC(userID, packName, min, max, pageCount))
+            dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, pageCount))
             dispatch(setCheckedMyPacksAC(true))
         } else {
-            dispatch(getPacksSearchTC(packName, min, max, pageCount))
+            dispatch(getPacksAndMyPacksWithSearchTC("", packName, min, max, pageCount))
             dispatch(setCheckedMyPacksAC(false))
         }
     }
@@ -53,12 +52,12 @@ export const Packs = () => {
                 dispatch(setPackNameAC(values.search))
                 dispatch(setMinAC(value[0]))
                 dispatch(setMaxAC(value[1]))
-                dispatch(getMyPacksSearchTC(userID, values.search, value[0], value[1], pageCount))
+                dispatch(getPacksAndMyPacksWithSearchTC(userID, values.search, value[0], value[1], pageCount))
             } else {
                 dispatch(setPackNameAC(values.search))
                 dispatch(setMinAC(value[0]))
                 dispatch(setMaxAC(value[1]))
-                dispatch(getPacksSearchTC(values.search, value[0], value[1], pageCount))
+                dispatch(getPacksAndMyPacksWithSearchTC("", values.search, value[0], value[1], pageCount))
             }
         }
     });
