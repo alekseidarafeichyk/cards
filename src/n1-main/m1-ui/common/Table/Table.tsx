@@ -7,7 +7,6 @@ import {
     addingPackTC,
     cardPack,
     deletePackTC,
-    getSetPacks,
     updatePackTC,
     desSortAC,
     ascendSortAC
@@ -68,8 +67,8 @@ export const Table = React.memo(() => {
                 <th>Name</th>
                 <th>
                     CardsCount
-                    <button className={Styles.arrow}>/\</button>
-                    <button className={Styles.arrow}>\/</button>
+                    <button className={Styles.arrow} onClick={onClickAscendingSort}>/\</button>
+                    <button className={Styles.arrow} onClick={onClickDescendingSort}>\/</button>
                 </th>
                 <th>Update</th>
                 <th>Url</th>
@@ -85,4 +84,4 @@ export const Table = React.memo(() => {
             </tbody>
         </table>
     );
-}
+})

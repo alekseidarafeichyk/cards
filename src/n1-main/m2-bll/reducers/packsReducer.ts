@@ -1,6 +1,6 @@
 import {Dispatch} from 'redux';
 import {packsAPI} from '../../m3-dal/api';
-import {setDataPaginator} from './paginatorReducer';
+import {setPacksTotalCountAC, setPageCountAC} from './dataForGetRequestReducer';
 
 const InitialState: InitialStateType = {
     cardPacks: [{
@@ -69,36 +69,49 @@ export const ascendSortAC = () => ({type: 'ASCENDING_SORT'} as const)
 export const updatePackAC = (id: string | null, name: string) => ({type: 'UPDATE_PACK', id, name} as const)
 
 //thunks
-export const getSetPacks = (portionPacks?: number,pageNumber?: number) => (dispatch: Dispatch) => {
+export const getSetPacks = (portionPacks?: number, pageNumber?: number) => (dispatch: Dispatch) => {
     packsAPI.getPacks(portionPacks,pageNumber)
         .then(res => {
+            debugger
             dispatch(setPacks(res.data))
-
-            const currentPage = res.data.page
-            const portion = res.data.pageCount
-            const pageCount = Math.ceil(res.data.cardPacksTotalCount/ portion)
-
-            dispatch(setDataPaginator(currentPage,portion,pageCount))
+            // dispatch(setPageAC(res.data.page))
+            dispatch(setPageCountAC(res.data.pageCount))
+            // dispatch(setPacksTotalCountAC(res.data.cardPacksTotalCount))
         })
         .catch((err) => {
             alert(err)
         })
 }
 
-export const getMyPacksTC = (userID: string) => (dispatch: Dispatch) => {
-    packsAPI.getMyPacks(userID)
+export const getMyPacksTC = (userID: string, pageCount: number, page: number) => (dispatch: Dispatch) => {
+    packsAPI.getMyPacks(userID,pageCount,page)
         .then(res => {
             dispatch(setMyPacks(res.data))
+            dispatch(setPacksTotalCountAC(res.data.cardPacksTotalCount))
         })
         .catch((err) => {
             alert(err)
         })
 }
 
-export const getPacksSearchTC = (packName: string, min: number, max: number) => (dispatch: Dispatch) => {
-    packsAPI.getPacksSearch(packName, min, max)
+export const getPacksSearchTC = (packName?: string, min?: number, max?: number, pageCount?: number) => (dispatch: Dispatch) => {
+    packsAPI.getPacksSearch(packName, min, max, pageCount)
         .then((res) => {
+            dispatch(setPacksTotalCountAC(res.data.cardPacksTotalCount))
+            dispatch(setPageCountAC(res.data.pageCount))
             dispatch(setPacks(res.data))
+        })
+        .catch((err) => {
+            console.log({...err})
+        })
+}
+
+export const getMyPacksSearchTC = (userID: string ,packName: string, min: number, max: number, pageCount: number) => (dispatch: Dispatch) => {
+    packsAPI.getMyPacksSearch(userID, packName, min, max, pageCount)
+        .then((res) => {
+            dispatch(setPacksTotalCountAC(res.data.cardPacksTotalCount))
+            dispatch(setPageCountAC(res.data.pageCount))
+            dispatch(setMyPacks(res.data))
         })
         .catch((err) => {
             console.log({...err})

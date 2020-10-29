@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {cardPack} from "../m2-bll/reducers/packsReducer";
 import {InitialStateType} from '../m2-bll/reducers/packsReducer';
 
 const instance = axios.create({
@@ -39,14 +38,26 @@ export const forgotAPI = {
 }
 
 export const packsAPI = {
-    getPacks(pageCount = 10, page = 1, sortPacks = '0updated') {
-        return instance.get<InitialStateType>(`/cards/pack?pageCount=${pageCount}&page=${page}&sortPacks=${sortPacks}`)
+    getPacks(pageCount = 10, page = 1) {
+        return instance.get<InitialStateType>(`/cards/pack?pageCount=${pageCount}&page=${page}`)
     },
-    getMyPacks(userID = "", pageCount = 10, page = 1,) {
-        return instance.get(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userID}`)
+    // getMYYYPacks(packName: string | null = "",
+    //              min: number | null= 0,
+    //              max: number | null= 20,
+    //              sortPacks: sortPacksType | null = "0updated",
+    //              page: number | null= 1,
+    //              pageCount: number | null= 10,
+    //              userID: string | null= "") {
+    //     return instance.get<InitialStateType>(`/cards/pack?packName==${packName}&min=${min}&max=${max}&sortPacks=${sortPacks}&page=${page}&pageCount=${pageCount}&user_id=${userID}`)
+    // },
+    getMyPacks(userID = "", pageCount = 10, page = 1) {
+        return instance.get<InitialStateType>(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userID}&sortPacks=1updated`)
     },
-    getPacksSearch(packName = "", min = 2, max = 9) {
-        return instance.get(`/cards/pack?packName=${packName}&min=${min}&max=${max}&pageCount=${10}`)
+    getPacksSearch(packName = "", min = 0, max = 100, pageCount= 10) {
+        return instance.get<InitialStateType>(`/cards/pack?packName=${packName}&min=${min}&max=${max}&pageCount=${pageCount}`)
+    },
+    getMyPacksSearch(userID:string, packName = "", min = 0, max = 20, pageCount = 10) {
+        return instance.get<InitialStateType>(`/cards/pack?packName=${packName}&min=${min}&max=${max}&user_id=${userID}&pageCount=${pageCount}`)
     },
     addPack() {
         return instance.post('/cards/pack', {cardsPack: {name: "check adding"}})
@@ -85,13 +96,3 @@ type ResponseType = {
     info: string
     success: boolean
 }
-
-type ResponseNewPackType = {
-    newCardsPack: cardPack
-}
-type ResponseDeletedPackType = {
-    deletedCardsPack: cardPack
-}
-// type newCardsPackType = {
-//     newCardsPack: cardPack
-// }

@@ -21,7 +21,7 @@ export type AuthData = {
 export const Login = () => {
     const dispatch = useDispatch()
     const isAuth = useSelector((state: RootState) => state.login.isAuth)
-const status = useSelector<RootState,RequestStatusType>(state => state.loader.status)
+    const status = useSelector<RootState, RequestStatusType>(state => state.loader.status)
 
     const formik = useFormik({
         initialValues: {
