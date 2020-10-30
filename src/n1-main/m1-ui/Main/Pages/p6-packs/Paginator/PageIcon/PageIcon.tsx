@@ -9,7 +9,7 @@ type PageIconPropsType = {
 
 export const PageIcon = (props: PageIconPropsType) => {
     return  <div className={style.containerPages}>
-        {props.pages.map(page => <span onClick={()=> {props.changePage(page)}} className={`${style.pageNumber} ${props.currentPage === page ? style.active : ''}`}>
+        {props.pages.map(page => <span key={page} onClick={()=> {props.changePage(page)}} className={`${style.pageNumber} ${props.currentPage === page ? style.active : ''}`}>
                     {page}
                       </span>)}
     </div>
