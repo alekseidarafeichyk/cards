@@ -1,6 +1,6 @@
 import {Dispatch} from 'redux';
 import {packsAPI} from '../../m3-dal/api';
-import {setDataPaginator} from './paginatorReducer';
+import {setPacksTotalCountAC, setPageAC, sortPacksType} from './dataForGetRequestReducer';
 
 const InitialState: InitialStateType = {
     cardPacks: [{
@@ -36,19 +36,13 @@ export const packsReducer = (state = InitialState, action: ActionsType): Initial
     switch (action.type) {
         case 'SET_PACKS':
             return {...state, ...action.packs}
-        case "SET_MY_PACKS":
-            return {...state, ...action.packs}
         case "ADD_PACK":
             return {...state, cardPacks: [action.pack, ...state.cardPacks]}
         case "DELETE_PACK":
-            return {...state,
-                cardPacks: [...state.cardPacks.filter(card => card._id !== action.id)]}
-        case "DESCENDING_SORT":
-            return {...state,
-                cardPacks: [...state.cardPacks.sort((a:cardPack, b:cardPack) =>  b.cardsCount! - a.cardsCount!)]}
-        case "ASCENDING_SORT":
-            return {...state,
-                cardPacks: [...state.cardPacks.sort((a:cardPack, b:cardPack) => a.cardsCount! - b.cardsCount!)]}
+            return {
+                ...state,
+                cardPacks: state.cardPacks.filter(card => card._id !== action.id)
+            }
         case "UPDATE_PACK":
             return {
                 ...state,
@@ -61,43 +55,29 @@ export const packsReducer = (state = InitialState, action: ActionsType): Initial
 
 //actions
 export const setPacks = (packs: InitialStateType) => ({type: 'SET_PACKS', packs} as const)
-export const setMyPacks = (packs: InitialStateType) => ({type: 'SET_MY_PACKS', packs} as const)
 export const addingPackAC = (pack: cardPack) => ({type: 'ADD_PACK', pack} as const)
 export const deletePackAC = (id: string | null) => ({type: 'DELETE_PACK', id} as const)
-export const desSortAC = () => ({type: 'DESCENDING_SORT'} as const)
-export const ascendSortAC = () => ({type: 'ASCENDING_SORT'} as const)
 export const updatePackAC = (id: string | null, name: string) => ({type: 'UPDATE_PACK', id, name} as const)
 
 //thunks
-export const getSetPacks = (portionPacks?: number,pageNumber?: number) => (dispatch: Dispatch) => {
-    packsAPI.getPacks(portionPacks,pageNumber)
+export const getPacksAndMyPacksTC = (userID?: string, pageCount?: number, page?: number) => (dispatch: Dispatch) => {
+    packsAPI.getPacksAndMyPacks(userID, pageCount, page)
         .then(res => {
+            dispatch(setPacksTotalCountAC(res.data.cardPacksTotalCount))
+            dispatch(setPageAC(res.data.page))
             dispatch(setPacks(res.data))
-
-            const currentPage = res.data.page
-            const portion = res.data.pageCount
-            const pageCount = Math.ceil(res.data.cardPacksTotalCount/ portion)
-
-            dispatch(setDataPaginator(currentPage,portion,pageCount))
         })
         .catch((err) => {
             alert(err)
         })
 }
 
-export const getMyPacksTC = (userID: string) => (dispatch: Dispatch) => {
-    packsAPI.getMyPacks(userID)
-        .then(res => {
-            dispatch(setMyPacks(res.data))
-        })
-        .catch((err) => {
-            alert(err)
-        })
-}
-
-export const getPacksSearchTC = (packName: string, min: number, max: number) => (dispatch: Dispatch) => {
-    packsAPI.getPacksSearch(packName, min, max)
+export const getPacksAndMyPacksWithSearchTC = (userID?: string, packName?: string, min?: number, max?: number, pageCount?: number, page?: number, sortPacks?: sortPacksType) => (dispatch: Dispatch) => {
+    packsAPI.getPacksAndMyPacksWithSearch(userID, packName, min, max, pageCount, page, sortPacks)
         .then((res) => {
+            debugger
+            dispatch(setPacksTotalCountAC(res.data.cardPacksTotalCount))
+            dispatch(setPageAC(res.data.page))
             dispatch(setPacks(res.data))
         })
         .catch((err) => {
@@ -118,7 +98,7 @@ export const addingPackTC = () => (dispatch: Dispatch) => {
 export const deletePackTC = (id: string | null) => (dispatch: Dispatch) => {
     packsAPI.deletePack(id)
         .then((res) => {
-           dispatch(deletePackAC(id))
+            dispatch(deletePackAC(id))
         })
         .catch((err) => {
             console.log({...err})
@@ -168,10 +148,7 @@ type ActionsType =
     | ReturnType<typeof setPacks>
     | ReturnType<typeof addingPackAC>
     | ReturnType<typeof updatePackAC>
-    | ReturnType<typeof setMyPacks>
     | ReturnType<typeof deletePackAC>
-    | ReturnType<typeof desSortAC>
-    | ReturnType<typeof ascendSortAC>
 
 type resType = {
     data: newCardsPackType

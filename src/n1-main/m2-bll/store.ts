@@ -7,7 +7,7 @@ import {registerReducer} from './reducers/registerReducer';
 import {profileReducer} from './reducers/profileReducer';
 import {loaderReducer} from './reducers/loaderReducer';
 import {packsReducer} from './reducers/packsReducer';
-import {paginatorReducer} from './reducers/paginatorReducer';
+import {dataForGetRequestReducer} from "./reducers/dataForGetRequestReducer";
 
 let reducers = combineReducers({
     login: loginReducer,
@@ -17,7 +17,7 @@ let reducers = combineReducers({
     profile: profileReducer,
     loader: loaderReducer,
     packs: packsReducer,
-    paginator: paginatorReducer
+    dataGetRequest: dataForGetRequestReducer
 })
 
 export type RootState = ReturnType<typeof reducers>

@@ -2,40 +2,71 @@ import React, {ChangeEvent} from 'react';
 import style from './Paginator.module.css'
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../../../m2-bll/store';
-import {getSetPacks} from '../../../../../m2-bll/reducers/packsReducer';
-import {PageIcon} from './PageIcon/PageIcon';
+import {
+    getPacksAndMyPacksWithSearchTC,
+    getPacksAndMyPacksTC,
+} from '../../../../../m2-bll/reducers/packsReducer';
+import Pagination from '@material-ui/lab/Pagination';
+import {
+    initialStateGetRequestType,
+    setPageAC,
+    setPageCountAC
+} from "../../../../../m2-bll/reducers/dataForGetRequestReducer";
 
 export const Paginator = () => {
+
+    const {page, pageCount, cardPacksTotalCount, checkedMyPacks, packName, min, max, searchStatus} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
+    const userID = useSelector<RootState, string>(state => state.profile._id)
     const dispatch = useDispatch()
 
-    const numberPages = useSelector<RootState, number>(state => state.paginator.pageCount)
-    const currentPage = useSelector<RootState, number>(state => state.paginator.currentPage)
-    const portionPacksOnPage = useSelector<RootState,number>(state => state.paginator.portionPacksOnPage)
+    const HowManyCounts = Math.ceil(cardPacksTotalCount / pageCount)
 
-    let pages = []
-    for (let i = 1; i <= numberPages; i++) {
-        pages.push(i)
+    //
+    const changeSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+        dispatch(setPageCountAC(+e.currentTarget.value))
+        if (checkedMyPacks) {
+            if (searchStatus) {
+                dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, +e.currentTarget.value, page))
+            } else {
+                dispatch(getPacksAndMyPacksTC(userID, +e.currentTarget.value, page))
+            }
+        } else {
+            if (searchStatus) {
+                dispatch(getPacksAndMyPacksWithSearchTC("",packName, min, max, +e.currentTarget.value, page))
+            } else {
+                dispatch(getPacksAndMyPacksTC("",+e.currentTarget.value, page))
+            }
+        }
     }
 
-    const changePortionPacks = (e: ChangeEvent<HTMLSelectElement>) => {
-        dispatch(getSetPacks(+e.currentTarget.value,currentPage))
-    }
-
-    const changePage = (pageNumber: number) => {
-        dispatch(getSetPacks(portionPacksOnPage,pageNumber))
+    const ChangePaginator = (event: ChangeEvent<unknown>, page: number) => {
+        dispatch(setPageAC(page))
+        if (checkedMyPacks) {
+            if (searchStatus) {
+                dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, pageCount, page))
+            } else {
+                dispatch(getPacksAndMyPacksTC(userID, pageCount, page))
+            }
+        } else {
+            if (searchStatus) {
+                dispatch(getPacksAndMyPacksWithSearchTC("", packName, min, max, pageCount, page))
+            } else {
+                dispatch(getPacksAndMyPacksTC("",pageCount, page))
+            }
+        }
     }
 
     return (
         <div>
-            <select onChange={changePortionPacks}>
+            <select onChange={changeSelect}>
+                <option value={4}>4</option>
+                <option value={5}>5</option>
                 <option value={10}>10</option>
                 <option value={20}>20</option>
                 <option value={30}>30</option>
-                <option value={40}>40</option>
-                <option value={50}>50</option>
             </select>
             <div className={style.containerPages}>
-               <PageIcon currentPage={currentPage} changePage={changePage} pages={pages}/>
+                <Pagination count={HowManyCounts} color="secondary" page={page} onChange={ChangePaginator}/>
             </div>
         </div>
     )

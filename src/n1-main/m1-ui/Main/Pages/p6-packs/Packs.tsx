@@ -6,32 +6,39 @@ import {Input} from "../../../common/Input/Input";
 import {Button} from "../../../common/Button/Button";
 import style from "./Packs.module.css"
 import {useDispatch, useSelector} from "react-redux";
-import {getMyPacksTC, getPacksSearchTC, getSetPacks} from "../../../../m2-bll/reducers/packsReducer";
+import {
+    getPacksAndMyPacksWithSearchTC,
+    getPacksAndMyPacksTC,
+} from "../../../../m2-bll/reducers/packsReducer";
 import {Checkbox} from '@material-ui/core';
 import {RootState} from "../../../../m2-bll/store";
 import {Paginator} from './Paginator/Paginator';
+import {
+    initialStateGetRequestType,
+    setCheckedMyPacksAC, setMaxAC, setMinAC, setPackNameAC, setSearchStatusAC,
+} from "../../../../m2-bll/reducers/dataForGetRequestReducer";
 
 export const Packs = () => {
 
     console.log("Packs rendering")
 
+    const {pageCount, checkedMyPacks, packName, min, max} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
     const userID = useSelector<RootState, string>(state => state.profile._id)
     let dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getSetPacks())
+        dispatch(getPacksAndMyPacksTC())
     }, [dispatch])
 
     const [value, setValue] = useState([0, 100])
-    const [checked, setChecked] = useState(false)
 
     const ChangeCheckbox = () => {
-        if (!checked) {
-            dispatch(getMyPacksTC(userID))
-            setChecked(!checked)
+        if (!checkedMyPacks) {
+            dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, pageCount))
+            dispatch(setCheckedMyPacksAC(true))
         } else {
-            dispatch(getSetPacks())
-            setChecked(!checked)
+            dispatch(getPacksAndMyPacksWithSearchTC("", packName, min, max, pageCount))
+            dispatch(setCheckedMyPacksAC(false))
         }
     }
 
@@ -40,7 +47,18 @@ export const Packs = () => {
             search: ''
         },
         onSubmit: values => {
-            dispatch(getPacksSearchTC(values.search, value[0], value[1]))
+            dispatch(setSearchStatusAC(true))
+            if (checkedMyPacks) {
+                dispatch(setPackNameAC(values.search))
+                dispatch(setMinAC(value[0]))
+                dispatch(setMaxAC(value[1]))
+                dispatch(getPacksAndMyPacksWithSearchTC(userID, values.search, value[0], value[1], pageCount))
+            } else {
+                dispatch(setPackNameAC(values.search))
+                dispatch(setMinAC(value[0]))
+                dispatch(setMaxAC(value[1]))
+                dispatch(getPacksAndMyPacksWithSearchTC("", values.search, value[0], value[1], pageCount))
+            }
         }
     });
 
@@ -61,7 +79,7 @@ export const Packs = () => {
                     <Button type="submit" name={"Search"}/>
                 </div>
             </form>
-            <div><Checkbox checked={checked} onChange={ChangeCheckbox}/>My cards</div>
+            <div><Checkbox checked={checkedMyPacks} onChange={ChangeCheckbox}/>My cards</div>
             <h1>Packs</h1>
             <Table/>
             <Paginator/>
