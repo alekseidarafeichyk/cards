@@ -7,6 +7,7 @@ import {registerReducer} from './reducers/registerReducer';
 import {profileReducer} from './reducers/profileReducer';
 import {loaderReducer} from './reducers/loaderReducer';
 import {packsReducer} from './reducers/packsReducer';
+import {cardsReducer} from './reducers/cardsReducer';
 import {dataForGetRequestReducer} from "./reducers/dataForGetRequestReducer";
 
 let reducers = combineReducers({
@@ -17,6 +18,7 @@ let reducers = combineReducers({
     profile: profileReducer,
     loader: loaderReducer,
     packs: packsReducer,
+    cards: cardsReducer,
     dataGetRequest: dataForGetRequestReducer
 })
 

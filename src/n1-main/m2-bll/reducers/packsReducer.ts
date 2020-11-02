@@ -75,7 +75,6 @@ export const getPacksAndMyPacksTC = (userID?: string, pageCount?: number, page?:
 export const getPacksAndMyPacksWithSearchTC = (userID?: string, packName?: string, min?: number, max?: number, pageCount?: number, page?: number, sortPacks?: sortPacksType) => (dispatch: Dispatch) => {
     packsAPI.getPacksAndMyPacksWithSearch(userID, packName, min, max, pageCount, page, sortPacks)
         .then((res) => {
-            debugger
             dispatch(setPacksTotalCountAC(res.data.cardPacksTotalCount))
             dispatch(setPageAC(res.data.page))
             dispatch(setPacks(res.data))

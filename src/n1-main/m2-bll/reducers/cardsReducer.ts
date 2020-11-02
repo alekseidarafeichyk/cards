@@ -1,6 +1,8 @@
+import { cardsAPI } from "../../m3-dal/api"
+import {Dispatch} from "redux";
 
 const InitialState: InitialStateType = {
-    cardPacks: [{
+    cards: [{
         __v: null,
         _id: null,
         answer: null,
@@ -23,102 +25,79 @@ const InitialState: InitialStateType = {
 }
 
 
-export const packsReducer = (state = InitialState, action: ActionsType): InitialStateType => {
+export const cardsReducer = (state = InitialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case 'SET_CARDS':
             return {...state, ...action.cards}
-        // case "SET_MY_PACKS":
-        //     return {...state, ...action.packs}
-        // case "ADD_PACK":
-        //     return {...state, cardPacks: [action.pack, ...state.cardPacks]}
-        // case "DELETE_PACK":
-        //     return {
-        //         ...state,
-        //         cardPacks: state.cardPacks.filter((pack) => pack._id !== action.id)
-        //     }
-        // case "UPDATE_PACK":
-        //     return {
-        //         ...state,
-        //         cardPacks: state.cardPacks.map((pack) => pack._id === action.id ? {...pack, name: action.name} : pack)
-        //     }
+        case "ADD_CARD":
+            return {...state, cards: [action.cards, ...state.cards]}
+        case "DELETE_CARD":
+            return {
+                ...state,
+                cards: state.cards.filter((card) => card._id !== action.id)
+            }
+        case "UPDATE_CARD":
+            return {
+                ...state,
+                cards: state.cards.map((card) => card._id === action.id ? {...card, name: action.name} : card)
+            }
         default :
             return state
     }
 }
-//
+
 // //actions
 export const setCards = (cards: cardsType) => ({type: 'SET_CARDS', cards} as const)
-// export const setMyPacks = (packs: InitialStateType) => ({type: 'SET_MY_PACKS', packs} as const)
-// export const addingPackAC = (pack: cardPack) => ({type: 'ADD_PACK', pack} as const)
-// export const updatePackAC = (id: string | null, name: string) => ({type: 'UPDATE_PACK', id, name} as const)
-// export const deleteAC = (id: string | null) => ({type: 'DELETE_PACK', id} as const)
-//
-// //thunks
-// export const getSetPacks = () => (dispatch: Dispatch) => {
-//     packsAPI.getPacks()
-//         .then(res => {
-//             dispatch(setPacks(res.data))
-//         })
-//         .catch((err) => {
-//             alert(err)
-//         })
-// }
-//
-// export const getMyPacksTC = (userID: string) => (dispatch: Dispatch) => {
-//     packsAPI.getMyPacks(userID)
-//         .then(res => {
-//             dispatch(setMyPacks(res.data))
-//         })
-//         .catch((err) => {
-//             alert(err)
-//         })
-// }
-//
-// export const getPacksSearchTC = (packName: string, min: number, max: number) => (dispatch: Dispatch) => {
-//     packsAPI.getPacksSearch(packName, min, max)
-//         .then((res) => {
-//             dispatch(setPacks(res.data))
-//         })
-//         .catch((err) => {
-//             console.log({...err})
-//         })
-// }
-//
-// export const addingPackTC = () => (dispatch: Dispatch) => {
-//     packsAPI.addPack()
-//         .then((res) => {
-//             dispatch(addingPackAC(res.data.newCardsPack))
-//         })
-//         .catch((err) => {
-//             console.log({...err})
-//         })
-// }
-//
-// export const deletePackTC = (id: string | null) => (dispatch: Dispatch) => {
-//     packsAPI.deletePack(id)
-//         .then((res) => {
-//             dispatch(deleteAC(res.data.deletedCardsPack._id))
-//             console.log(res)
-//         })
-//         .catch((err) => {
-//             console.log({...err})
-//         })
-// }
-//
-// export const updatePackTC = (id: string | null, name: string) => (dispatch: Dispatch) => {
-//     packsAPI.updatePack(id, name)
-//         .then((res) => {
-//             console.log(res)
-//             dispatch(updatePackAC(id, name))
-//         })
-//         .catch((err) => {
-//             console.log({...err})
-//         })
-// }
+export const addingCardAC = (cards: cardsType) => ({type: 'ADD_CARD', cards} as const)
+export const updateCardAC = (id: string | null, name: string) => ({type: 'UPDATE_CARD', id, name} as const)
+export const deleteCardAC = (id: string | null) => ({type: 'DELETE_CARD', id} as const)
+
+//thunks
+export const getCards = (packId:string) => (dispatch: Dispatch) => {
+    cardsAPI.getCards(packId)
+        .then(res => {
+            dispatch(setCards(res.data))
+        })
+        .catch((err) => {
+            alert(err)
+        })
+}
+
+export const addingCardTC = (packId:string) => (dispatch: Dispatch) => {
+    cardsAPI.addCard(packId)
+        .then((res) => {
+            dispatch(addingCardAC(res.data.newCard))
+        })
+        .catch((err) => {
+            console.log({...err})
+        })
+}
+
+export const deleteCardTC = (id: string | null) => (dispatch: Dispatch) => {
+    cardsAPI.deleteCard(id)
+        .then((res) => {
+            dispatch(deleteCardAC(res.data.deletedCardsPack._id))
+            console.log(res)
+        })
+        .catch((err) => {
+            console.log({...err})
+        })
+}
+
+export const updateCardTC = (id: string | null, question: string, comments: string) => (dispatch: Dispatch) => {
+    cardsAPI.updateCard(id, question, comments)
+        .then((res) => {
+            console.log(res)
+            dispatch(updateCardAC(id, question))
+        })
+        .catch((err) => {
+            console.log({...err})
+        })
+}
 
 // types
 export type InitialStateType = {
-    cardPacks: Array<cardsType>
+    cards: Array<cardsType>
     cardsTotalCount: number | null,
     maxGrade: number | null,
     minGrade: number | null,
@@ -141,7 +120,6 @@ export type cardsType = {
 }
 type ActionsType =
     | ReturnType<typeof setCards>
-//     | ReturnType<typeof addingPackAC>
-//     | ReturnType<typeof updatePackAC>
-//     | ReturnType<typeof setMyPacks>
-//     | ReturnType<typeof deleteAC>
+    | ReturnType<typeof addingCardAC>
+    | ReturnType<typeof updateCardAC>
+    | ReturnType<typeof deleteCardAC>

@@ -9,6 +9,12 @@
     cursor: pointer;
 }
 
+.editButton {
+    float: right;
+    font-size: .8rem;
+}
+
+
 .table button:focus {
     outline: none;
 }
@@ -17,6 +23,7 @@ tbody td {
     border-bottom: 1px solid #afadad;
 
 }
+
 
 tbody tr:nth-child(2n) {
    background: #f3f3f3;

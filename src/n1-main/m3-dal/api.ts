@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {cardPack} from "../m2-bll/reducers/packsReducer";
 import {InitialStateType} from '../m2-bll/reducers/packsReducer';
+import {sortPacksType} from "../m2-bll/reducers/dataForGetRequestReducer";
 
 const instance = axios.create({
     withCredentials: true,
@@ -39,14 +39,11 @@ export const forgotAPI = {
 }
 
 export const packsAPI = {
-    getPacks(pageCount = 10, page = 1, sortPacks = '0updated') {
-        return instance.get<InitialStateType>(`/cards/pack?pageCount=${pageCount}&page=${page}&sortPacks=${sortPacks}`)
+    getPacksAndMyPacks(userID = "", pageCount = 4, page = 1) {
+        return instance.get<InitialStateType>(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userID}`)
     },
-    getMyPacks(userID = "", pageCount = 10, page = 1,) {
-        return instance.get(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userID}`)
-    },
-    getPacksSearch(packName = "", min = 2, max = 9) {
-        return instance.get(`/cards/pack?packName=${packName}&min=${min}&max=${max}&pageCount=${10}`)
+    getPacksAndMyPacksWithSearch(userID: string | undefined, packName = "", min = 0, max = 100, pageCount = 10, page: number | undefined, sortPacks: sortPacksType | undefined) {
+        return instance.get<InitialStateType>(`/cards/pack?packName=${packName}&min=${min}&max=${max}&pageCount=${pageCount}&page=${page}&user_id=${userID}&sortPacks=${sortPacks}`)
     },
     addPack() {
         return instance.post('/cards/pack', {cardsPack: {name: "check adding"}})
@@ -56,6 +53,22 @@ export const packsAPI = {
     },
     updatePack(id: string | null, name: string) {
         return instance.put('/cards/pack', {cardsPack: {_id: id, name}})
+    },
+}
+
+
+export const cardsAPI = {
+    getCards(packId: string , pageCount = 4, page = 1) {
+        return instance.get(`/cards/card?pageCount=${pageCount}&page=${page}&cardsPack_id=${packId}`)
+    },
+    addCard(packId: string) {
+        return instance.post('/cards/card', {card: {cardsPack_id: packId}})
+    },
+    deleteCard(id: string | null) {
+        return instance.delete(`/cards/card?id=${id}`)
+    },
+    updateCard(id: string | null, question: string, comments: string) {
+        return instance.put('/cards/card', {card: {_id: id, question, comments}})
     },
 }
 
@@ -85,13 +98,3 @@ type ResponseType = {
     info: string
     success: boolean
 }
-
-type ResponseNewPackType = {
-    newCardsPack: cardPack
-}
-type ResponseDeletedPackType = {
-    deletedCardsPack: cardPack
-}
-// type newCardsPackType = {
-//     newCardsPack: cardPack
-// }

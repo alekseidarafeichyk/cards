@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import Styles from './Table.module.css'
 import {useDispatch, useSelector} from 'react-redux';
@@ -8,9 +8,10 @@ import {
     cardPack,
     deletePackTC,
     updatePackTC,
-    getPacksAndMyPacksWithSearchTC
+    getPacksAndMyPacksWithSearchTC, updatePackAC
 } from '../../../m2-bll/reducers/packsReducer';
 import {initialStateGetRequestType, setSortPacksAC} from "../../../m2-bll/reducers/dataForGetRequestReducer";
+import {Input} from "../Input/Input";
 
 
 export const Table = React.memo(() => {
@@ -21,6 +22,11 @@ export const Table = React.memo(() => {
     const userID = useSelector<RootState, string>(state => state.profile._id)
     const {page, pageCount, checkedMyPacks, packName, min, max} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
     const packs = useSelector<RootState, Array<cardPack>>(state => state.packs.cardPacks)
+
+    // Edit Item function
+    const [editMode, setEditMode] = useState(false)
+    const [value, setValue] = useState('')
+
     const dispatch = useDispatch()
 
 
@@ -56,9 +62,33 @@ export const Table = React.memo(() => {
 
     }
 
+    // Edit mode event handlers
+
+    const onEnableEditMode = () => {
+        setEditMode(true)
+    }
+
+    const onDisableEditMode = (id:string) => {
+            dispatch(updatePackAC(id, value))
+            setEditMode(false)
+    }
+
+    const setEditButton = () => {
+
+    }
+
+    const onUpdateValue = (e: React.FormEvent<HTMLInputElement>) => {
+        setValue(e.currentTarget.value)
+    }
+
     const renderRows = () => packs.map(row =>
         <tr key={row._id}>
-            <td>{row.name}</td>
+            <td>
+                {editMode ?
+                    <button className={Styles.editButton} onClick={() => onDisableEditMode(row._id!)}>ok</button> :
+                    <button className={Styles.editButton} onClick={() => onEnableEditMode()}>edit</button>}
+                {editMode ? <Input name={row.name!} onChange={() => onUpdateValue}/> : `${row.name}`}
+            </td>
             <td>{row.cardsCount}</td>
             <td>{row.updated}</td>
             <td>''</td>
@@ -68,7 +98,7 @@ export const Table = React.memo(() => {
             <td>
                 <button onClick={() => onClickUpdatePack(row._id, newName)}>update</button>
             </td>
-            <td><Link to={'#'}>cards</Link></td>
+            <td><Link to={`/cards/${row._id}`}>cards</Link></td>
         </tr>
     )
     return (

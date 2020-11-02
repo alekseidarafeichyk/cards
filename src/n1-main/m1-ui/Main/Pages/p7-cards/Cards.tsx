@@ -1,63 +1,28 @@
-import React from "react";
-import Styles from "../../../common/Table/Table.module.css";
+import React, {useEffect} from "react";
+import { TableCards } from "../../../common/Table/TableCards";
+import { useParams } from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {getCards} from "../../../../m2-bll/reducers/cardsReducer";
+;
 
-const card = [
-    {
-        id: 222,
-        Question: 1,
-        Answer: 2,
-        Grade: 3,
-        Update: 4,
-        Url: 5
-    },
-    {
-        id: 333,
-        Question: 6,
-        Answer: 7,
-        Grade: 8,
-        Update: 9,
-        Url: 10
-    },
-]
+
 
 export const Cards = () => {
 
-    const renderRows = () => card.map(row =>
-        <tr key={row.id}>
-            <td>{row.Question}</td>
-            <td>{row.Answer}</td>
-            <td>{row.Grade}</td>
-            <td>{row.Update}</td>
-            <td>{row.Url}</td>
-            <td>
-                <button>delete</button>
-            </td>
-            <td>
-                <button>update</button>
-            </td>
-        </tr>
-    )
+    const {packId} = useParams()
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getCards(packId))
+    }, [dispatch])
 
     return (
-        <div>
-            <table className={Styles.table}>
-                <thead>
-                <tr>
-                    <th>Question</th>
-                    <th>Answer</th>
-                    <th>Grade</th>
-                    <th>Update</th>
-                    <th>Url</th>
-                    <th>
-                        <button>Add</button>
-                    </th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                {renderRows()}
-                </tbody>
-            </table>
-        </div>
-    );
+       <>
+           <h1>Cards</h1>
+           <TableCards packId={packId}/>
+       </>
+        )
+
+
+
 }

@@ -2,12 +2,15 @@ import React from 'react';
 import style from './PageIcon.module.css';
 
 type PageIconPropsType = {
-        pages: Array<number>
+    pages: Array<number>
+    changePage: (page: number) => void
+    currentPage: number
 }
 
 export const PageIcon = (props: PageIconPropsType) => {
-    return  (
-               <div>
-                   {props.pages.map(p => <span>{p}</span>)}
-               </div>     )
+    return  <div className={style.containerPages}>
+        {props.pages.map(page => <span key={page} onClick={()=> {props.changePage(page)}} className={`${style.pageNumber} ${props.currentPage === page ? style.active : ''}`}>
+                    {page}
+                      </span>)}
+    </div>
 }

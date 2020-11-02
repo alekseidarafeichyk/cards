@@ -20,6 +20,7 @@ export const Paginator = () => {
     const dispatch = useDispatch()
 
     const HowManyCounts = Math.ceil(cardPacksTotalCount / pageCount)
+
     //
     const changeSelect = (e: ChangeEvent<HTMLSelectElement>) => {
         dispatch(setPageCountAC(+e.currentTarget.value))
