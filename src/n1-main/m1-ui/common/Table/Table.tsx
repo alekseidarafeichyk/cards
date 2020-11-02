@@ -73,10 +73,6 @@ export const Table = React.memo(() => {
             setEditMode(false)
     }
 
-    const setEditButton = () => {
-
-    }
-
     const onUpdateValue = (e: React.FormEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value)
     }
@@ -87,7 +83,7 @@ export const Table = React.memo(() => {
                 {editMode ?
                     <button className={Styles.editButton} onClick={() => onDisableEditMode(row._id!)}>ok</button> :
                     <button className={Styles.editButton} onClick={() => onEnableEditMode()}>edit</button>}
-                {editMode ? <Input name={row.name!} onChange={() => onUpdateValue}/> : `${row.name}`}
+                {editMode ? <Input name={row.name!} onChange={(e) => onUpdateValue(e)} /> : `${row.name}`}
             </td>
             <td>{row.cardsCount}</td>
             <td>{row.updated}</td>

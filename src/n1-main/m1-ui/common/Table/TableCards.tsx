@@ -12,6 +12,7 @@ import {
 } from '../../../m2-bll/reducers/packsReducer';
 import {initialStateGetRequestType, setSortPacksAC} from "../../../m2-bll/reducers/dataForGetRequestReducer";
 import {addingCardTC, deleteCardTC, updateCardTC} from "../../../m2-bll/reducers/cardsReducer";
+import {dialogModal} from "../../../m4-utils/modals/modals";
 
 
 type PropsType = {
@@ -26,14 +27,16 @@ export const TableCards = React.memo((props:PropsType) => {
 
 
     const onClickAddCard = () => {
+        dialogModal('Карточка была успешно создана')
         dispatch(addingCardTC(props.packId))
+
     }
 
-    const onClickDeletePack = (id: string | null) => {
+    const onClickDeleteCard = (id: string | null) => {
         dispatch(deleteCardTC(id))
     }
 
-    const onClickUpdatePack = (id: string | null, question: string, comments: string) => {
+    const onClickUpdateCard = (id: string | null, question: string, comments: string) => {
         dispatch(updateCardTC(id, question, comments))
     }
 
@@ -44,8 +47,10 @@ export const TableCards = React.memo((props:PropsType) => {
             <td>{row.answer}</td>
             <td>{row.grade}</td>
             <td>{row.updated}</td>
+            <td>''</td>
+            <td></td>
             <td>
-                <button>delete</button>
+                <button onClick = {()=> onClickDeleteCard(row._id)}>delete</button>
             </td>
             <td>
                 <button>update</button>
@@ -66,6 +71,7 @@ export const TableCards = React.memo((props:PropsType) => {
                     <th>
                         <button onClick={()=> onClickAddCard()}>Add</button>
                     </th>
+                    <th></th>
                     <th></th>
                 </tr>
                 </thead>

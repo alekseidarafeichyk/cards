@@ -1,5 +1,6 @@
 import { cardsAPI } from "../../m3-dal/api"
 import {Dispatch} from "redux";
+import {dialogModal} from "../../m4-utils/modals/modals";
 
 const InitialState: InitialStateType = {
     cards: [{
@@ -76,8 +77,7 @@ export const addingCardTC = (packId:string) => (dispatch: Dispatch) => {
 export const deleteCardTC = (id: string | null) => (dispatch: Dispatch) => {
     cardsAPI.deleteCard(id)
         .then((res) => {
-            dispatch(deleteCardAC(res.data.deletedCardsPack._id))
-            console.log(res)
+            dispatch(deleteCardAC(res.data.deletedCards._id))
         })
         .catch((err) => {
             console.log({...err})
