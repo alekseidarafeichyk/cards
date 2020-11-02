@@ -26,11 +26,16 @@ export const Packs = () => {
     const userID = useSelector<RootState, string>(state => state.profile._id)
     let dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getPacksAndMyPacksTC())
-    }, [dispatch])
 
-    const [value, setValue] = useState([0, 100])
+    const isAuth = useSelector<RootState,boolean>(state => state.login.isAuth)
+
+    useEffect(() => {
+        if(isAuth){
+            dispatch(getPacksAndMyPacksTC())
+        }
+    }, [dispatch,isAuth])
+
+    const [value, setValue] = useState([0, 16])
 
     const ChangeCheckbox = () => {
         if (!checkedMyPacks) {
@@ -74,7 +79,7 @@ export const Packs = () => {
                 <CommonSlider value={value}
                               setValue={setValue}
                               min={0}
-                              max={100}/>
+                              max={16}/>
                 <div>
                     <Button type="submit" name={"Search"}/>
                 </div>

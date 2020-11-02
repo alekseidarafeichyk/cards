@@ -6,6 +6,7 @@ import {useDispatch} from 'react-redux';
 import {authMe} from '../m2-bll/reducers/loginReducer';
 
 const App = () => {
+    console.log('App')
     const dispatch = useDispatch()
 
     useEffect(() => {
