@@ -26,6 +26,7 @@ export const Packs = () => {
     const userID = useSelector<RootState, string>(state => state.profile._id)
     let dispatch = useDispatch()
 
+    const maxCardsCount = useSelector<RootState, number>(state => state.packs.maxCardsCount)
 
     const isAuth = useSelector<RootState,boolean>(state => state.login.isAuth)
 
@@ -35,7 +36,7 @@ export const Packs = () => {
         }
     }, [dispatch,isAuth])
 
-    const [value, setValue] = useState([0, 16])
+    const [value, setValue] = useState([0, maxCardsCount])
 
     const ChangeCheckbox = () => {
         if (!checkedMyPacks) {
@@ -79,7 +80,7 @@ export const Packs = () => {
                 <CommonSlider value={value}
                               setValue={setValue}
                               min={0}
-                              max={16}/>
+                              max={maxCardsCount}/>
                 <div>
                     <Button type="submit" name={"Search"}/>
                 </div>

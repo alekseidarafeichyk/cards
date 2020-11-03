@@ -26,8 +26,8 @@ const InitialState: InitialStateType = {
     page: 0,
     pageCount: 0,
     cardPacksTotalCount: 0,
-    minCardsCount: null,
-    maxCardsCount: null,
+    minCardsCount: 0,
+    maxCardsCount: 0,
     token: null,
     tokenDeathTime: null,
 }
@@ -62,6 +62,7 @@ export const updatePackAC = (id: string | null, name: string) => ({type: 'UPDATE
 
 //thunks
 export const getPacksAndMyPacksTC = (userID?: string, pageCount?: number, page?: number) => (dispatch: Dispatch) => {
+    debugger
     packsAPI.getPacksAndMyPacks(userID, pageCount, page)
         .then(res => {
             dispatch(setPacksTotalCountAC(res.data.cardPacksTotalCount))
@@ -131,7 +132,7 @@ export const deletePackTC = (id: string | null) => (dispatch: Dispatch<any>,getS
 
     packsAPI.deletePack(id)
         .then((res) => {
-            dispatch(getPacksAndMyPacksWithSearchTC(userId,packName,min,max,pageCount,page,sortPacks)) //мой код
+            // dispatch(getPacksAndMyPacksWithSearchTC(userId,packName,min,max,pageCount,page,sortPacks)) //мой код
             // dispatch(deletePackAC(id))
           return packsAPI.getPacksAndMyPacksWithSearch(userId,packName,min,max,pageCount,page,sortPacks) //мой код
         })
@@ -161,8 +162,8 @@ export type InitialStateType = {
     page: number
     pageCount: number
     cardPacksTotalCount: number
-    minCardsCount: number | null
-    maxCardsCount: number | null
+    minCardsCount: number
+    maxCardsCount: number
     token: string | null
     tokenDeathTime: number | null
 }

@@ -2,7 +2,7 @@ const initialState: initialStateGetRequestType = {
     packName: "",
     min: 0,
     max: 100,
-    sortPacks: "0updated",
+    sortPacks: "0cardsCount",
     page: 1,
     pageCount: 4,
     checkedMyPacks: false,
@@ -68,7 +68,7 @@ export type initialStateGetRequestType = {
     cardPacksTotalCount: number
     searchStatus: boolean
 }
-export type sortPacksType = "1updated" | "0updated"
+export type sortPacksType = "1cardsCount" | "0cardsCount"
 
 type ActionType = ReturnType<typeof setPackNameAC>
     | ReturnType<typeof setMinAC>

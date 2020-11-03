@@ -43,21 +43,21 @@ export const Table = React.memo(() => {
     }
 
     const onClickDescendingSort = () => {
-        dispatch(setSortPacksAC("0updated"))
+        dispatch(setSortPacksAC("0cardsCount"))
         if (checkedMyPacks) {
-            dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, pageCount, page, "0updated"))
+            dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, pageCount, page, "0cardsCount"))
         } else {
-            dispatch(getPacksAndMyPacksWithSearchTC("", packName, min, max, pageCount, page, "0updated"))
+            dispatch(getPacksAndMyPacksWithSearchTC("", packName, min, max, pageCount, page, "0cardsCount"))
         }
 
     }
 
     const onClickAscendingSort = () => {
-        dispatch(setSortPacksAC("1updated"))
+        dispatch(setSortPacksAC("1cardsCount"))
         if (checkedMyPacks) {
-            dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, pageCount, page, "1updated"))
+            dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, pageCount, page, "1cardsCount"))
         } else {
-            dispatch(getPacksAndMyPacksWithSearchTC("", packName, min, max, pageCount, page, "1updated"))
+            dispatch(getPacksAndMyPacksWithSearchTC("", packName, min, max, pageCount, page, "1cardsCount"))
         }
 
     }
