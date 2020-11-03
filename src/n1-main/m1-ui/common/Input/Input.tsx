@@ -5,6 +5,7 @@ type InputPropsType =
     React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
     name?: string,
     id?: string
+
 };
 
 export const Input : FC<InputPropsType> = React.memo (({name,id,...rest}) => {

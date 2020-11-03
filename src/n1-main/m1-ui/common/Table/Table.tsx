@@ -12,6 +12,7 @@ import {
 } from '../../../m2-bll/reducers/packsReducer';
 import {initialStateGetRequestType, setSortPacksAC} from "../../../m2-bll/reducers/dataForGetRequestReducer";
 import {Input} from "../Input/Input";
+import {EditableField} from "../EditableField/EditableField";
 
 
 export const Table = React.memo(() => {
@@ -22,10 +23,6 @@ export const Table = React.memo(() => {
     const userID = useSelector<RootState, string>(state => state.profile._id)
     const {page, pageCount, checkedMyPacks, packName, min, max} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
     const packs = useSelector<RootState, Array<cardPack>>(state => state.packs.cardPacks)
-
-    // Edit Item function
-    const [editMode, setEditMode] = useState(false)
-    const [value, setValue] = useState('')
 
     const dispatch = useDispatch()
 
@@ -62,28 +59,10 @@ export const Table = React.memo(() => {
 
     }
 
-    // Edit mode event handlers
-
-    const onEnableEditMode = () => {
-        setEditMode(true)
-    }
-
-    const onDisableEditMode = (id:string) => {
-            dispatch(updatePackAC(id, value))
-            setEditMode(false)
-    }
-
-    const onUpdateValue = (e: React.FormEvent<HTMLInputElement>) => {
-        setValue(e.currentTarget.value)
-    }
-
     const renderRows = () => packs.map(row =>
         <tr key={row._id}>
             <td>
-                {editMode ?
-                    <button className={Styles.editButton} onClick={() => onDisableEditMode(row._id!)}>ok</button> :
-                    <button className={Styles.editButton} onClick={() => onEnableEditMode()}>edit</button>}
-                {editMode ? <Input name={row.name!} onChange={(e) => onUpdateValue(e)} /> : `${row.name}`}
+                <EditableField id={row._id} name={row.name!}/>
             </td>
             <td>{row.cardsCount}</td>
             <td>{row.updated}</td>

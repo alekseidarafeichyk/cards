@@ -7,6 +7,7 @@ export const basicModal = (title: string) =>{
 export const dialogModal = (title: string) => {
     Swal.fire({
         position: 'top-end',
+        input: "text",
         icon: 'success',
         title: title,
         showConfirmButton: false,
