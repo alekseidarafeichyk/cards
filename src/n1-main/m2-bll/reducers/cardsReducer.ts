@@ -1,6 +1,5 @@
 import { cardsAPI } from "../../m3-dal/api"
 import {Dispatch} from "redux";
-import {dialogModal} from "../../m4-utils/modals/modals";
 
 const InitialState: InitialStateType = {
     cards: [{

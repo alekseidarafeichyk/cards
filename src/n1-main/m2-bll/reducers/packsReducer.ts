@@ -84,8 +84,8 @@ export const getPacksAndMyPacksWithSearchTC = (userID?: string, packName?: strin
         })
 }
 
-export const addingPackTC = () => (dispatch: Dispatch) => {
-    packsAPI.addPack()
+export const addingPackTC = (packName: string) => (dispatch: Dispatch) => {
+    packsAPI.addPack(packName)
         .then((res: resType) => {
             dispatch(addingPackAC(res.data.newCardsPack))
         })

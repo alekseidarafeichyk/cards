@@ -10,9 +10,18 @@ import {
     updatePackTC,
     getPacksAndMyPacksWithSearchTC, updatePackAC
 } from '../../../m2-bll/reducers/packsReducer';
-import {initialStateGetRequestType, setSortPacksAC} from "../../../m2-bll/reducers/dataForGetRequestReducer";
+import {
+    initialStateGetRequestType,
+    setPackNameAC,
+    setSortPacksAC
+} from "../../../m2-bll/reducers/dataForGetRequestReducer";
 import {Input} from "../Input/Input";
 import {EditableField} from "../EditableField/EditableField";
+
+// Modal windows library
+import withReactContent from 'sweetalert2-react-content'
+import Swal from "sweetalert2";
+const MySwal = withReactContent(Swal)
 
 
 export const Table = React.memo(() => {
@@ -23,13 +32,30 @@ export const Table = React.memo(() => {
     const userID = useSelector<RootState, string>(state => state.profile._id)
     const {page, pageCount, checkedMyPacks, packName, min, max} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
     const packs = useSelector<RootState, Array<cardPack>>(state => state.packs.cardPacks)
-
     const dispatch = useDispatch()
 
 
-    const onClickAddPack = () => {
-        dispatch(addingPackTC())
+    const onUpdatePackName = (e:any) => {
+       dispatch(setPackNameAC(e.currentTarget.value))
     }
+
+    const onClickAddPack = () => {
+        // Modal window
+        MySwal.fire({
+                title: 'Введите название колоды',
+                html: <Input onChange={onUpdatePackName}/>,
+                showCancelButton: true,
+                confirmButtonText: `Сохранить`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(addingPackTC(packName))
+                    Swal.fire('Колода создана', '', 'success')
+                }
+            })
+        }
+
+
+
 
     const onClickDeletePack = (id: string | null) => {
         dispatch(deletePackTC(id))
@@ -89,7 +115,7 @@ export const Table = React.memo(() => {
                 <th>Update</th>
                 <th>Url</th>
                 <th>
-                    <button onClick={onClickAddPack}>Add</button>
+                    <button onClick={() => onClickAddPack()}>Add</button>
                 </th>
                 <th></th>
                 <th></th>
