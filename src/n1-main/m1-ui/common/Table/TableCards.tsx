@@ -1,18 +1,9 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import Styles from './Table.module.css'
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../m2-bll/store';
-import {
-    addingPackTC,
-    cardPack,
-    deletePackTC,
-    updatePackTC,
-    getPacksAndMyPacksWithSearchTC
-} from '../../../m2-bll/reducers/packsReducer';
-import {initialStateGetRequestType, setSortPacksAC} from "../../../m2-bll/reducers/dataForGetRequestReducer";
-import {addingCardTC, deleteCardTC, updateCardTC} from "../../../m2-bll/reducers/cardsReducer";
-import {dialogModal} from "../../../m4-utils/modals/modals";
+import {addingCardTC, deleteCardTC, updateCardTC} from '../../../m2-bll/reducers/cardsReducer';
+import {dialogModal} from '../../../m4-utils/modals/modals';
 
 
 type PropsType = {
@@ -29,7 +20,6 @@ export const TableCards = React.memo((props:PropsType) => {
     const onClickAddCard = () => {
         dialogModal('Карточка была успешно создана')
         dispatch(addingCardTC(props.packId))
-
     }
 
     const onClickDeleteCard = (id: string | null) => {

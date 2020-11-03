@@ -70,7 +70,6 @@ export const LogOut = () => (dispatch: Dispatch<ActionsTypes>) => {
 }
 
 export const authMe = () => (dispatch: Dispatch) => {
-    debugger
     authAPI.me()
         .then(response => {
             dispatch(setDeleteUserProfile(response.data))

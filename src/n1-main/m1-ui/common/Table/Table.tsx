@@ -7,11 +7,12 @@ import {
     addingPackTC,
     cardPack,
     deletePackTC,
-    updatePackTC,
-    getPacksAndMyPacksWithSearchTC, updatePackAC
+    getPacksThunk,
+    updatePackAC,
+    updatePackTC
 } from '../../../m2-bll/reducers/packsReducer';
-import {initialStateGetRequestType, setSortPacksAC} from "../../../m2-bll/reducers/dataForGetRequestReducer";
-import {Input} from "../Input/Input";
+import {initialStateGetRequestType, setSortPacksAC} from '../../../m2-bll/reducers/dataForGetRequestReducer';
+import {Input} from '../Input/Input';
 
 
 export const Table = React.memo(() => {
@@ -20,7 +21,7 @@ export const Table = React.memo(() => {
 
     const newName = "new checked name"
     const userID = useSelector<RootState, string>(state => state.profile._id)
-    const {page, pageCount, checkedMyPacks, packName, min, max} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
+    const {checkedMyPacks} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
     const packs = useSelector<RootState, Array<cardPack>>(state => state.packs.cardPacks)
 
     // Edit Item function
@@ -45,9 +46,9 @@ export const Table = React.memo(() => {
     const onClickDescendingSort = () => {
         dispatch(setSortPacksAC("0cardsCount"))
         if (checkedMyPacks) {
-            dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, pageCount, page, "0cardsCount"))
+            dispatch(getPacksThunk(userID))
         } else {
-            dispatch(getPacksAndMyPacksWithSearchTC("", packName, min, max, pageCount, page, "0cardsCount"))
+            dispatch(getPacksThunk())
         }
 
     }
@@ -55,9 +56,9 @@ export const Table = React.memo(() => {
     const onClickAscendingSort = () => {
         dispatch(setSortPacksAC("1cardsCount"))
         if (checkedMyPacks) {
-            dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, pageCount, page, "1cardsCount"))
+            dispatch(getPacksThunk(userID))
         } else {
-            dispatch(getPacksAndMyPacksWithSearchTC("", packName, min, max, pageCount, page, "1cardsCount"))
+            dispatch(getPacksThunk())
         }
 
     }
