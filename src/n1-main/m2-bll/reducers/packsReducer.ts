@@ -87,8 +87,8 @@ export const getPacksThunk = (userId?: string) => (dispatch:Dispatch, getState :
         })
 }
 
-export const addingPackTC = () => (dispatch: Dispatch,getState: () => RootState) => {
-    packsAPI.addPack()
+export const addingPackTC = (packName: string) => (dispatch: Dispatch,getState: () => RootState) => {
+    packsAPI.addPack(packName)
         .then((res: resType) => {
             dispatch(addingPackAC(res.data.newCardsPack))
         })

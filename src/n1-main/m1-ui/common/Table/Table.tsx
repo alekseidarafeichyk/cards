@@ -56,7 +56,7 @@ export const Table = React.memo(() => {
                 confirmButtonText: `Сохранить`,
             }).then((result) => {
                 if (result.isConfirmed) {
-                    dispatch(addingPackTC())
+                    dispatch(addingPackTC('aaaa'))
                     Swal.fire('Колода создана', '', 'success')
                 }
             })
