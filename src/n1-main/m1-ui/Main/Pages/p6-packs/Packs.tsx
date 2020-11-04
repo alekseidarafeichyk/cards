@@ -16,7 +16,6 @@ import {
     setMaxAC,
     setMinAC,
     setPackNameAC,
-    setSearchStatusAC,
 } from '../../../../m2-bll/reducers/dataForGetRequestReducer';
 
 export const Packs = () => {
@@ -33,7 +32,9 @@ export const Packs = () => {
 
     useEffect(() => {
         if (isAuth) {
-            dispatch(getPacksThunk())
+            dispatch(checkedMyPacks ?
+                getPacksThunk(userID) : getPacksThunk()
+            )
         }
     }, [dispatch, isAuth])
 
@@ -57,7 +58,6 @@ export const Packs = () => {
             dispatch(setMinAC(value[0]))
             dispatch(setMaxAC(value[1]))
             dispatch(setPackNameAC(values.search))
-            dispatch(setSearchStatusAC(true))
             if (checkedMyPacks) {
                 dispatch(getPacksThunk(userID))
             } else {

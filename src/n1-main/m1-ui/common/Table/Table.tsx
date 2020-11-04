@@ -17,9 +17,9 @@ import {Input} from '../Input/Input';
 
 export const Table = React.memo(() => {
 
-    console.log("Table rendering")
+    console.log('Table rendering')
 
-    const newName = "new checked name"
+    const newName = 'new checked name'
     const userID = useSelector<RootState, string>(state => state.profile._id)
     const {checkedMyPacks} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
     const packs = useSelector<RootState, Array<cardPack>>(state => state.packs.cardPacks)
@@ -44,23 +44,13 @@ export const Table = React.memo(() => {
     }
 
     const onClickDescendingSort = () => {
-        dispatch(setSortPacksAC("0cardsCount"))
-        if (checkedMyPacks) {
-            dispatch(getPacksThunk(userID))
-        } else {
-            dispatch(getPacksThunk())
-        }
-
+        dispatch(setSortPacksAC('0cardsCount'))
+        checkedMyPacks ? dispatch(getPacksThunk(userID)) : dispatch(getPacksThunk())
     }
 
     const onClickAscendingSort = () => {
-        dispatch(setSortPacksAC("1cardsCount"))
-        if (checkedMyPacks) {
-            dispatch(getPacksThunk(userID))
-        } else {
-            dispatch(getPacksThunk())
-        }
-
+        dispatch(setSortPacksAC('1cardsCount'))
+        checkedMyPacks ? dispatch(getPacksThunk(userID)) : dispatch(getPacksThunk())
     }
 
     // Edit mode event handlers
@@ -69,9 +59,9 @@ export const Table = React.memo(() => {
         setEditMode(true)
     }
 
-    const onDisableEditMode = (id:string) => {
-            dispatch(updatePackAC(id, value))
-            setEditMode(false)
+    const onDisableEditMode = (id: string) => {
+        dispatch(updatePackAC(id, value))
+        setEditMode(false)
     }
 
     const onUpdateValue = (e: React.FormEvent<HTMLInputElement>) => {
@@ -84,7 +74,7 @@ export const Table = React.memo(() => {
                 {editMode ?
                     <button className={Styles.editButton} onClick={() => onDisableEditMode(row._id!)}>ok</button> :
                     <button className={Styles.editButton} onClick={() => onEnableEditMode()}>edit</button>}
-                {editMode ? <Input name={row.name!} onChange={(e) => onUpdateValue(e)} /> : `${row.name}`}
+                {editMode ? <Input name={row.name!} onChange={(e) => onUpdateValue(e)}/> : `${row.name}`}
             </td>
             <td>{row.cardsCount}</td>
             <td>{row.updated}</td>

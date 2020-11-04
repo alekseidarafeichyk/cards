@@ -1,6 +1,5 @@
-import { cardsAPI } from "../../m3-dal/api"
-import {Dispatch} from "redux";
-import {dialogModal} from "../../m4-utils/modals/modals";
+import {cardsAPI} from '../../m3-dal/api'
+import {Dispatch} from 'redux';
 
 const InitialState: InitialStateType = {
     cards: [{
@@ -24,7 +23,6 @@ const InitialState: InitialStateType = {
     pageCount: null,
 
 }
-
 
 export const cardsReducer = (state = InitialState, action: ActionsType): InitialStateType => {
     switch (action.type) {

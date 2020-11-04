@@ -74,7 +74,6 @@ export const getPacksThunk = (userId?: string) => (dispatch:Dispatch, getState :
         pageCount: state.dataGetRequest.pageCount,
         checkedMyPacks: state.dataGetRequest.checkedMyPacks,
         cardPacksTotalCount: state.dataGetRequest.cardPacksTotalCount,
-        searchStatus: state.dataGetRequest.searchStatus
     }
 
     packsAPI.getPacks(requestParameters,userId)
@@ -92,7 +91,6 @@ export const addingPackTC = () => (dispatch: Dispatch,getState: () => RootState)
     packsAPI.addPack()
         .then((res: resType) => {
             dispatch(addingPackAC(res.data.newCardsPack))
-
         })
         .catch((err) => {
             console.log({...err})

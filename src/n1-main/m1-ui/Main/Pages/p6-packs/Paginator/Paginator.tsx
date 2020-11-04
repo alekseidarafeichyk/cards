@@ -17,23 +17,15 @@ export const Paginator = () => {
     const dispatch = useDispatch()
 
     const HowManyCounts = Math.ceil(cardPacksTotalCount / pageCount)
+
     const changeSelect = (e: ChangeEvent<HTMLSelectElement>) => {
         dispatch(setPageCountAC(+e.currentTarget.value))
-        if (checkedMyPacks) {
-            dispatch(getPacksThunk(userID))
-        } else {
-            dispatch(getPacksThunk())
-        }
+        checkedMyPacks ? dispatch(getPacksThunk(userID)) :dispatch(getPacksThunk())
     }
 
     const ChangePaginator = (event: ChangeEvent<unknown>, page: number) => {
-        if (checkedMyPacks) {
-            dispatch(setPageAC(page))
-            dispatch(getPacksThunk(userID))
-        } else {
-            dispatch(setPageAC(page))
-            dispatch(getPacksThunk())
-        }
+        dispatch(setPageAC(page))
+        checkedMyPacks ? dispatch(getPacksThunk(userID)) : dispatch(getPacksThunk())
     }
 
     return (
