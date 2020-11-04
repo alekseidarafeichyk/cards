@@ -55,7 +55,7 @@ export const packsAPI = {
 
 
 export const cardsAPI = {
-    getCards(packId: string , pageCount = 4, page = 1) {
+    getCards(packId: string, pageCount = 4, page = 1) {
         return instance.get(`/cards/card?pageCount=${pageCount}&page=${page}&cardsPack_id=${packId}`)
     },
     addCard(packId: string) {
@@ -67,6 +67,12 @@ export const cardsAPI = {
     updateCard(id: string | null, question: string, comments: string) {
         return instance.put('/cards/card', {card: {_id: id, question, comments}})
     },
+}
+
+export const learnAPI = {
+    sendGrade(grade: number | null, card_id: string | null) {
+        return instance.put('/cards/grade', {grade, card_id})
+    }
 }
 
 

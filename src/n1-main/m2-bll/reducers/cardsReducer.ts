@@ -1,4 +1,4 @@
-import { cardsAPI } from "../../m3-dal/api"
+import {cardsAPI, learnAPI} from "../../m3-dal/api"
 import {Dispatch} from "redux";
 
 const InitialState: InitialStateType = {
@@ -8,7 +8,7 @@ const InitialState: InitialStateType = {
         answer: null,
         cardsPack_id: null,
         created: null,
-        grade: null,
+        grade: 0,
         question: null,
         rating: null,
         shots: null,
@@ -53,17 +53,18 @@ export const updateCardAC = (id: string | null, name: string) => ({type: 'UPDATE
 export const deleteCardAC = (id: string | null) => ({type: 'DELETE_CARD', id} as const)
 
 //thunks
-export const getCards = (packId:string) => (dispatch: Dispatch) => {
+export const getCards = (packId: string) => (dispatch: Dispatch) => {
     cardsAPI.getCards(packId)
         .then(res => {
             dispatch(setCards(res.data))
         })
         .catch((err) => {
             alert(err)
+            console.log({...err})
         })
 }
 
-export const addingCardTC = (packId:string) => (dispatch: Dispatch) => {
+export const addingCardTC = (packId: string) => (dispatch: Dispatch) => {
     cardsAPI.addCard(packId)
         .then((res) => {
             dispatch(addingCardAC(res.data.newCard))
@@ -94,6 +95,16 @@ export const updateCardTC = (id: string | null, question: string, comments: stri
         })
 }
 
+export const sendGradeTC = (grade: number, card_id: string | null) => () => {
+    learnAPI.sendGrade(grade, card_id)
+        .then(res => {
+            console.log("then ", res)
+        })
+        .catch(err => {
+            console.log("err ", {...err})
+        })
+}
+
 // types
 export type InitialStateType = {
     cards: Array<cardsType>
@@ -107,7 +118,7 @@ export type cardsType = {
     answer: string | null
     question: string | null
     cardsPack_id: string | null
-    grade: number | null
+    grade: number
     rating: number | null
     shots: number | null
     type: string | null

@@ -1,10 +1,9 @@
 import React, {useEffect} from "react";
-import { TableCards } from "../../../common/Table/TableCards";
-import { useParams } from "react-router-dom";
+import {TableCards} from "../../../common/Table/TableCards";
+import {useParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {getCards} from "../../../../m2-bll/reducers/cardsReducer";
-;
-
+import {NavLinkCommon} from "../../../common/Navlink/NavlinkCommon";
 
 
 export const Cards = () => {
@@ -14,15 +13,13 @@ export const Cards = () => {
 
     useEffect(() => {
         dispatch(getCards(packId))
-    }, [dispatch])
+    }, [dispatch, packId])
 
     return (
-       <>
-           <h1>Cards</h1>
-           <TableCards packId={packId}/>
-       </>
-        )
-
-
-
+        <>
+            <h1>Cards</h1>
+            <TableCards packId={packId}/>
+            <NavLinkCommon to={`/learn/${packId}`} linkName={"PLAY"}/>
+        </>
+    )
 }

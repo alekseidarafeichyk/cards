@@ -5,3 +5,4 @@ export const newPassword: string = '/new_password';
 export const profile: string = '/profile';
 export const packs: string = '/packs';
 export const cards: string = '/cards/:packId';
+export const learn: string = '/learn/:packId';
