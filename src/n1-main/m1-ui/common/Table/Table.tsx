@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
 import Styles from './Table.module.css'
 import {useDispatch, useSelector} from 'react-redux';
@@ -34,21 +34,28 @@ export const Table = React.memo(() => {
     const packs = useSelector<RootState, Array<cardPack>>(state => state.packs.cardPacks)
     const dispatch = useDispatch()
 
+    const [inputValue, setInputValue] = useState(packName)
+    const inputEl = useRef<any>('');
 
-    const onUpdatePackName = (e:any) => {
-       dispatch(setPackNameAC(e.currentTarget.value))
+    useEffect(()=>{
+        dispatch(setPackNameAC(inputValue))
+    }, [inputValue])
+
+    const onUpdatePackName = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // setInputValue(e.currentTarget.value)
+        // dispatch(setPackNameAC(e.currentTarget.value))
     }
 
     const onClickAddPack = () => {
         // Modal window
         MySwal.fire({
                 title: 'Введите название колоды',
-                html: <Input onChange={onUpdatePackName}/>,
+                html: <Input ref={inputEl} onChange={onUpdatePackName}/> ,
                 showCancelButton: true,
                 confirmButtonText: `Сохранить`,
             }).then((result) => {
                 if (result.isConfirmed) {
-                    dispatch(addingPackTC(packName))
+                    dispatch(addingPackTC(inputEl.current.value))
                     Swal.fire('Колода создана', '', 'success')
                 }
             })
