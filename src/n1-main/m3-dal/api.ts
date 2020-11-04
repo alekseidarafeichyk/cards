@@ -1,6 +1,5 @@
 import axios from 'axios';
-import {InitialStateType} from '../m2-bll/reducers/packsReducer';
-import {sortPacksType} from "../m2-bll/reducers/dataForGetRequestReducer";
+import {initialStateGetRequestType} from '../m2-bll/reducers/dataForGetRequestReducer';
 
 const instance = axios.create({
     withCredentials: true,
@@ -39,11 +38,9 @@ export const forgotAPI = {
 }
 
 export const packsAPI = {
-    getPacksAndMyPacks(userID = "", pageCount = 4, page = 1) {
-        return instance.get<InitialStateType>(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userID}`)
-    },
-    getPacksAndMyPacksWithSearch(userID: string | undefined, packName = "", min = 0, max = 100, pageCount = 10, page: number | undefined, sortPacks: sortPacksType | undefined) {
-        return instance.get<InitialStateType>(`/cards/pack?packName=${packName}&min=${min}&max=${max}&pageCount=${pageCount}&page=${page}&user_id=${userID}&sortPacks=${sortPacks}`)
+    getPacks(requestParameters:initialStateGetRequestType, userID=''){
+        const {pageCount,page,sortPacks,max,min,packName} = requestParameters
+        return instance.get(`/cards/pack?packName=${packName}&min=${min}&max=${max}&pageCount=${pageCount}&page=${page}&sortPacks=${sortPacks}&user_id=${userID}`)
     },
     addPack(packName: string) {
         return instance.post('/cards/pack', {cardsPack: {name: packName}})

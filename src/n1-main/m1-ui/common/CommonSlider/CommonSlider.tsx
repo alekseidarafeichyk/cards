@@ -1,7 +1,7 @@
-import React from "react";
-import {Slider} from "@material-ui/core";
-import style from "./CommonSlider.module.css"
-import {makeStyles} from "@material-ui/core/styles";
+import React from 'react';
+import {Slider} from '@material-ui/core';
+import style from './CommonSlider.module.css'
+import {makeStyles} from '@material-ui/core/styles';
 
 
 const useStyles = makeStyles({
@@ -18,8 +18,7 @@ type Slider2Type = {
     max: number
 }
 
-export const CommonSlider = React.memo((props: Slider2Type) => {
-
+export const CommonSlider = (props: Slider2Type) => {
     const classes = useStyles();
 
     const handleChange = (event: any, newValue: number | number[]) => {
@@ -41,4 +40,4 @@ export const CommonSlider = React.memo((props: Slider2Type) => {
             aria-labelledby="range-slider"
         />
     </div>
-})
+}

@@ -1,44 +1,52 @@
 import React, {useEffect, useState} from 'react';
-import {Table} from "../../../common/Table/Table";
-import {CommonSlider} from "../../../common/CommonSlider/CommonSlider";
-import {useFormik} from "formik";
-import {Input} from "../../../common/Input/Input";
-import {Button} from "../../../common/Button/Button";
-import style from "./Packs.module.css"
-import {useDispatch, useSelector} from "react-redux";
-import {
-    getPacksAndMyPacksWithSearchTC,
-    getPacksAndMyPacksTC,
-} from "../../../../m2-bll/reducers/packsReducer";
+import {Table} from '../../../common/Table/Table';
+import {CommonSlider} from '../../../common/CommonSlider/CommonSlider';
+import {useFormik} from 'formik';
+import {Input} from '../../../common/Input/Input';
+import {Button} from '../../../common/Button/Button';
+import style from './Packs.module.css'
+import {useDispatch, useSelector} from 'react-redux';
+import {getPacksThunk,} from '../../../../m2-bll/reducers/packsReducer';
 import {Checkbox} from '@material-ui/core';
-import {RootState} from "../../../../m2-bll/store";
+import {RootState} from '../../../../m2-bll/store';
 import {Paginator} from './Paginator/Paginator';
 import {
     initialStateGetRequestType,
-    setCheckedMyPacksAC, setMaxAC, setMinAC, setPackNameAC, setSearchStatusAC,
-} from "../../../../m2-bll/reducers/dataForGetRequestReducer";
+    setCheckedMyPacksAC,
+    setMaxAC,
+    setMinAC,
+    setPackNameAC,
+} from '../../../../m2-bll/reducers/dataForGetRequestReducer';
 
 export const Packs = () => {
 
-    console.log("Packs rendering")
+    console.log('Packs rendering')
 
-    const {pageCount, checkedMyPacks, packName, min, max} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
+    const {checkedMyPacks} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
     const userID = useSelector<RootState, string>(state => state.profile._id)
     let dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getPacksAndMyPacksTC())
-    }, [dispatch])
+    const maxCardsCount = useSelector<RootState, number>(state => state.packs.maxCardsCount)
 
-    const [value, setValue] = useState([0, 100])
+    const isAuth = useSelector<RootState, boolean>(state => state.login.isAuth)
+
+    useEffect(() => {
+        if (isAuth) {
+            dispatch(checkedMyPacks ?
+                getPacksThunk(userID) : getPacksThunk()
+            )
+        }
+    }, [dispatch, isAuth])
+
+    const [value, setValue] = useState([0, maxCardsCount])
 
     const ChangeCheckbox = () => {
         if (!checkedMyPacks) {
-            dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, pageCount))
             dispatch(setCheckedMyPacksAC(true))
+            dispatch(getPacksThunk(userID))
         } else {
-            dispatch(getPacksAndMyPacksWithSearchTC("", packName, min, max, pageCount))
             dispatch(setCheckedMyPacksAC(false))
+            dispatch(getPacksThunk())
         }
     }
 
@@ -47,17 +55,13 @@ export const Packs = () => {
             search: ''
         },
         onSubmit: values => {
-            dispatch(setSearchStatusAC(true))
+            dispatch(setMinAC(value[0]))
+            dispatch(setMaxAC(value[1]))
+            dispatch(setPackNameAC(values.search))
             if (checkedMyPacks) {
-                dispatch(setPackNameAC(values.search))
-                dispatch(setMinAC(value[0]))
-                dispatch(setMaxAC(value[1]))
-                dispatch(getPacksAndMyPacksWithSearchTC(userID, values.search, value[0], value[1], pageCount))
+                dispatch(getPacksThunk(userID))
             } else {
-                dispatch(setPackNameAC(values.search))
-                dispatch(setMinAC(value[0]))
-                dispatch(setMaxAC(value[1]))
-                dispatch(getPacksAndMyPacksWithSearchTC("", values.search, value[0], value[1], pageCount))
+                dispatch(getPacksThunk())
             }
         }
     });
@@ -65,7 +69,7 @@ export const Packs = () => {
     return (
         <>
             <form onSubmit={formik.handleSubmit} className={style.formStyle}>
-                <Input placeholder={"Search"}
+                <Input placeholder={'Search'}
                        id="search"
                        name="search"
                        type="text"
@@ -74,9 +78,9 @@ export const Packs = () => {
                 <CommonSlider value={value}
                               setValue={setValue}
                               min={0}
-                              max={100}/>
+                              max={maxCardsCount}/>
                 <div>
-                    <Button type="submit" name={"Search"}/>
+                    <Button type="submit" name={'Search'}/>
                 </div>
             </form>
             <div><Checkbox checked={checkedMyPacks} onChange={ChangeCheckbox}/>My cards</div>

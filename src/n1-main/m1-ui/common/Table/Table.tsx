@@ -7,8 +7,9 @@ import {
     addingPackTC,
     cardPack,
     deletePackTC,
-    updatePackTC,
-    getPacksAndMyPacksWithSearchTC, updatePackAC
+    getPacksThunk,
+    updatePackAC,
+    updatePackTC
 } from '../../../m2-bll/reducers/packsReducer';
 import {
     initialStateGetRequestType,
@@ -55,7 +56,7 @@ export const Table = React.memo(() => {
                 confirmButtonText: `Сохранить`,
             }).then((result) => {
                 if (result.isConfirmed) {
-                    dispatch(addingPackTC(inputEl.current.value))
+                    dispatch(addingPackTC())
                     Swal.fire('Колода создана', '', 'success')
                 }
             })
@@ -73,23 +74,13 @@ export const Table = React.memo(() => {
     }
 
     const onClickDescendingSort = () => {
-        dispatch(setSortPacksAC("0updated"))
-        if (checkedMyPacks) {
-            dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, pageCount, page, "0updated"))
-        } else {
-            dispatch(getPacksAndMyPacksWithSearchTC("", packName, min, max, pageCount, page, "0updated"))
-        }
-
+        dispatch(setSortPacksAC('0cardsCount'))
+        checkedMyPacks ? dispatch(getPacksThunk(userID)) : dispatch(getPacksThunk())
     }
 
     const onClickAscendingSort = () => {
-        dispatch(setSortPacksAC("1updated"))
-        if (checkedMyPacks) {
-            dispatch(getPacksAndMyPacksWithSearchTC(userID, packName, min, max, pageCount, page, "1updated"))
-        } else {
-            dispatch(getPacksAndMyPacksWithSearchTC("", packName, min, max, pageCount, page, "1updated"))
-        }
-
+        dispatch(setSortPacksAC('1cardsCount'))
+        checkedMyPacks ? dispatch(getPacksThunk(userID)) : dispatch(getPacksThunk())
     }
 
     const renderRows = () => packs.map(row =>
