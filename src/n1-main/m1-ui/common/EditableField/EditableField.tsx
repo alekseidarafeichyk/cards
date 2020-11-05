@@ -2,13 +2,13 @@
 import React, {useState} from 'react';
 import Styles from "../Table/Table.module.css";
 import {Input} from "../Input/Input";
-import {updatePackAC} from "../../../m2-bll/reducers/packsReducer";
+import {updatePackTC} from "../../../m2-bll/reducers/packsReducer";
 import {useDispatch} from "react-redux";
 import {Button} from "../Button/Button";
 
 type Props = {
     id: string | null
-    name:string
+    name: string
 };
 export const EditableField = (props: Props) => {
 
@@ -22,7 +22,7 @@ export const EditableField = (props: Props) => {
     }
 
     const onDisableEditMode = (id:string) => {
-        dispatch(updatePackAC(id, value))
+        dispatch(updatePackTC(id, value))
         setEditMode(false)
     }
 

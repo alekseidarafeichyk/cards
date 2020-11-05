@@ -12,6 +12,5 @@ export const Header = () => {
             <NavLinkCommon to={newPassword} linkName={'New Password'}/>
             <NavLinkCommon to={profile} linkName={'Profile'}/>
             <NavLinkCommon to={packs} linkName={'Packs'}/>
-            <NavLinkCommon to={cards} linkName={'Cards'}/>
         </div>)
 }

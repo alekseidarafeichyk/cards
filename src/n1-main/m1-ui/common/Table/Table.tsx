@@ -7,6 +7,7 @@ import {
     addingPackTC,
     cardPack,
     deletePackTC,
+    getPacksAndMyPacksWithSearchTC,
     getPacksThunk,
     updatePackAC,
     updatePackTC
@@ -35,42 +36,29 @@ export const Table = React.memo(() => {
     const packs = useSelector<RootState, Array<cardPack>>(state => state.packs.cardPacks)
     const dispatch = useDispatch()
 
-    const [inputValue, setInputValue] = useState(packName)
-    const inputEl = useRef<any>('');
 
-    useEffect(()=>{
-        dispatch(setPackNameAC(inputValue))
-    }, [inputValue])
-
-    const onUpdatePackName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // setInputValue(e.currentTarget.value)
-        // dispatch(setPackNameAC(e.currentTarget.value))
-    }
 
     const onClickAddPack = () => {
-        // Modal window
-        MySwal.fire({
-                title: 'Введите название колоды',
-                html: <Input ref={inputEl} onChange={onUpdatePackName}/> ,
+       MySwal.fire({
+                title: 'Add new Pack',
+                html: <Input id={'swal-input1'} placeholder={'Enter pack name'}/> ,
                 showCancelButton: true,
-                confirmButtonText: `Сохранить`,
+                confirmButtonText: `Save`,
+                preConfirm: () => {
+                    return {
+                    packName: (document.getElementById('swal-input1') as HTMLInputElement).value
+                    }
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    dispatch(addingPackTC('aaaa'))
-                    Swal.fire('Колода создана', '', 'success')
+                    dispatch(addingPackTC(result.value!.packName))
+                    Swal.fire('Pack was added', '', 'success')
                 }
             })
         }
 
-
-
-
     const onClickDeletePack = (id: string | null) => {
         dispatch(deletePackTC(id))
-    }
-
-    const onClickUpdatePack = (id: string | null, newName: string) => {
-        dispatch(updatePackTC(id, newName))
     }
 
     const onClickDescendingSort = () => {
@@ -93,9 +81,6 @@ export const Table = React.memo(() => {
             <td>''</td>
             <td>
                 <button onClick={() => onClickDeletePack(row._id)}>delete</button>
-            </td>
-            <td>
-                <button onClick={() => onClickUpdatePack(row._id, newName)}>update</button>
             </td>
             <td><Link to={`/cards/${row._id}`}>cards</Link></td>
         </tr>
