@@ -7,14 +7,10 @@ import {
     addingPackTC,
     cardPack,
     deletePackTC,
-    getPacksAndMyPacksWithSearchTC,
     getPacksThunk,
-    updatePackAC,
-    updatePackTC
 } from '../../../m2-bll/reducers/packsReducer';
 import {
     initialStateGetRequestType,
-    setPackNameAC,
     setSortPacksAC
 } from "../../../m2-bll/reducers/dataForGetRequestReducer";
 import {Input} from "../Input/Input";
@@ -28,11 +24,9 @@ const MySwal = withReactContent(Swal)
 
 export const Table = React.memo(() => {
 
-    console.log("Table rendering")
 
-    const newName = "new checked name"
     const userID = useSelector<RootState, string>(state => state.profile._id)
-    const {page, pageCount, checkedMyPacks, packName, min, max} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
+    const {checkedMyPacks} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
     const packs = useSelector<RootState, Array<cardPack>>(state => state.packs.cardPacks)
     const dispatch = useDispatch()
 

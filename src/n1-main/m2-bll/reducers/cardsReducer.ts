@@ -1,4 +1,4 @@
-import { cardsAPI } from "../../m3-dal/api"
+import { cardsAPI, learnAPI } from "../../m3-dal/api"
 import {Dispatch} from "redux";
 
 const InitialState: InitialStateType = {
