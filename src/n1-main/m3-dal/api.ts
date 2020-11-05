@@ -61,8 +61,8 @@ export const cardsAPI = {
     getCards(packId: string , pageCount = 4, page = 1) {
         return instance.get(`/cards/card?pageCount=${pageCount}&page=${page}&cardsPack_id=${packId}`)
     },
-    addCard(packId: string) {
-        return instance.post('/cards/card', {card: {cardsPack_id: packId}})
+    addCard(packId: string, question:string, answer:string) {
+        return instance.post('/cards/card', {card: {cardsPack_id: packId, question, answer}})
     },
     deleteCard(id: string | null) {
         return instance.delete(`/cards/card?id=${id}`)

@@ -34,12 +34,11 @@ export const Table = React.memo(() => {
 
 
     const onClickAddPack = () => {
-
        MySwal.fire({
-                title: 'Введите название колоды',
-                html: <Input id={'swal-input1'}/> ,
+                title: 'Add new Pack',
+                html: <Input id={'swal-input1'} placeholder={'Enter pack name'}/> ,
                 showCancelButton: true,
-                confirmButtonText: `Сохранить`,
+                confirmButtonText: `Save`,
                 preConfirm: () => {
                     return {
                     packName: (document.getElementById('swal-input1') as HTMLInputElement).value
@@ -53,7 +52,6 @@ export const Table = React.memo(() => {
                 }
             })
         }
-
 
     const onClickDeletePack = (id: string | null) => {
         dispatch(deletePackTC(id))

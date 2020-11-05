@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import Styles from "../Table/Table.module.css";
 import {Input} from "../Input/Input";
-import {updatePackAC, updatePackTC} from "../../../m2-bll/reducers/packsReducer";
+import {updatePackTC} from "../../../m2-bll/reducers/packsReducer";
 import {useDispatch} from "react-redux";
 import {Button} from "../Button/Button";
 

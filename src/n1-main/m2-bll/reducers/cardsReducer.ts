@@ -63,8 +63,8 @@ export const getCards = (packId:string) => (dispatch: Dispatch) => {
         })
 }
 
-export const addingCardTC = (packId:string) => (dispatch: Dispatch) => {
-    cardsAPI.addCard(packId)
+export const addingCardTC = (packId:string, question: string, answer: string) => (dispatch: Dispatch) => {
+    cardsAPI.addCard(packId, question, answer)
         .then((res) => {
             dispatch(addingCardAC(res.data.newCard))
         })
