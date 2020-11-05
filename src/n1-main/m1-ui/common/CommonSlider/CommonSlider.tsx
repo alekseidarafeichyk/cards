@@ -6,21 +6,21 @@ import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
     root: {
-        width: "100%",
-        color: "black",
+        width: '100%',
+        color: 'black',
     }
 });
 
 type Slider2Type = {
     value: number[]
-    setValue:(newValue:number[]) => void
+    setValue: (newValue: number[]) => void
     min: number
     max: number
 }
 
-export const CommonSlider = (props: Slider2Type) => {
+export const CommonSlider = React.memo((props: Slider2Type) => {
     const classes = useStyles();
-
+debugger
     const handleChange = (event: any, newValue: number | number[]) => {
         props.setValue(newValue as number[]);
     };
@@ -40,4 +40,4 @@ export const CommonSlider = (props: Slider2Type) => {
             aria-labelledby="range-slider"
         />
     </div>
-}
+})

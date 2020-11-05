@@ -10,7 +10,7 @@ import {
     setPageCountAC
 } from '../../../../../m2-bll/reducers/dataForGetRequestReducer';
 
-export const Paginator = () => {
+export const Paginator = React.memo(() => {
 
     const {page, pageCount, cardPacksTotalCount, checkedMyPacks} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
     const userID = useSelector<RootState, string>(state => state.profile._id)
@@ -42,4 +42,4 @@ export const Paginator = () => {
             </div>
         </div>
     )
-}
+})

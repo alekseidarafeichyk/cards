@@ -18,7 +18,7 @@ import {
     setPackNameAC,
 } from '../../../../m2-bll/reducers/dataForGetRequestReducer';
 
-export const Packs = () => {
+export const Packs = React.memo(() => {
 
     console.log('Packs rendering')
 
@@ -32,18 +32,21 @@ export const Packs = () => {
 
     useEffect(() => {
         if (isAuth) {
-            dispatch(checkedMyPacks ?
-                getPacksThunk(userID) : getPacksThunk()
-            )
+            checkedMyPacks ? dispatch(getPacksThunk(userID)) : dispatch(getPacksThunk())
         }
     }, [dispatch, isAuth])
 
-    const [value, setValue] = useState([0, maxCardsCount])
+    const [value, setValue] = useState([0, 0])
+
+    useEffect(() => {
+        setValue([0, maxCardsCount])
+    }, [maxCardsCount])
 
     const ChangeCheckbox = () => {
         if (!checkedMyPacks) {
             dispatch(setCheckedMyPacksAC(true))
             dispatch(getPacksThunk(userID))
+            setValue([0,maxCardsCount])
         } else {
             dispatch(setCheckedMyPacksAC(false))
             dispatch(getPacksThunk())
@@ -89,4 +92,4 @@ export const Packs = () => {
             <Paginator/>
         </>
     )
-}
+})
