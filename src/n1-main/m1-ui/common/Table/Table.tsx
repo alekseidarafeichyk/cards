@@ -38,6 +38,7 @@ export const Table = React.memo(() => {
                 html: <Input id={'swal-input1'} placeholder={'Enter pack name'}/> ,
                 showCancelButton: true,
                 confirmButtonText: `Save`,
+                confirmButtonColor: '#26c17e',
                 preConfirm: () => {
                     return {
                     packName: (document.getElementById('swal-input1') as HTMLInputElement).value
@@ -94,7 +95,6 @@ export const Table = React.memo(() => {
                 <th>
                     <button onClick={() => onClickAddPack()}>Add</button>
                 </th>
-                <th></th>
                 <th></th>
             </tr>
             </thead>
