@@ -4,8 +4,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../m2-bll/store';
 import {addingCardTC, deleteCardTC, updateCardTC} from "../../../m2-bll/reducers/cardsReducer";
 import {Input} from "../Input/Input";
-import {addingPackTC} from "../../../m2-bll/reducers/packsReducer";
-// Modal windows library
 import withReactContent from 'sweetalert2-react-content'
 import Swal from "sweetalert2";
 const MySwal = withReactContent(Swal)
@@ -31,7 +29,8 @@ export const TableCards = React.memo((props:PropsType) => {
                     <Input id={'swal-input2'} placeholder={'Enter your answer'}/>
                 </>,
             showCancelButton: true,
-            confirmButtonText: `save`,
+            confirmButtonText: `Save`,
+            confirmButtonColor: '#26c17e',
             preConfirm: () => {
                 return {
                     question: (document.getElementById('swal-input1') as HTMLInputElement).value,
@@ -39,7 +38,6 @@ export const TableCards = React.memo((props:PropsType) => {
                 }
             }
         }).then((result) => {
-            console.dir(result)
             if (result.isConfirmed) {
                 dispatch(addingCardTC(props.packId, result.value!.question, result.value!.answer))
                 Swal.fire('Card was created', '', 'success')
@@ -51,8 +49,30 @@ export const TableCards = React.memo((props:PropsType) => {
         dispatch(deleteCardTC(id))
     }
 
-    const onClickUpdateCard = (id: string | null, question: string, answer: string) => {
-        dispatch(updateCardTC(id, question, answer))
+    const onClickUpdateCard = (id: string | null, question:string, answer:string) => {
+        MySwal.fire({
+            title: 'Update your Card',
+            html:
+                <>
+                    <Input id={'swal-input1'} placeholder={question}/>
+                    <Input id={'swal-input2'}  placeholder={answer}/>
+                </>,
+            showCancelButton: true,
+            confirmButtonText: `Save`,
+            confirmButtonColor: '#26c17e',
+            preConfirm: () => {
+                return {
+                    question: (document.getElementById('swal-input1') as HTMLInputElement).value,
+                    answer: (document.getElementById('swal-input2') as HTMLInputElement).value
+                }
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(updateCardTC(id, result.value!.question, result.value!.answer))
+                Swal.fire('Card was created', '', 'success')
+            }
+        })
+
     }
 
 
@@ -68,7 +88,7 @@ export const TableCards = React.memo((props:PropsType) => {
                 <button onClick = {()=> onClickDeleteCard(row._id)}>delete</button>
             </td>
             <td>
-                <button>update</button>
+                <button onClick = {()=> onClickUpdateCard(row._id, row.question!, row.answer!)}>update</button>
             </td>
         </tr>
     )

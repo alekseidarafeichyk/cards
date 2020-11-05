@@ -8,7 +8,7 @@ import {Button} from "../Button/Button";
 
 type Props = {
     id: string | null
-    name:string
+    name: string
 };
 export const EditableField = (props: Props) => {
 

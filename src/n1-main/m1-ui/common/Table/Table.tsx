@@ -45,10 +45,9 @@ export const Table = React.memo(() => {
                     }
                 }
             }).then((result) => {
-               console.dir(result)
                 if (result.isConfirmed) {
                     dispatch(addingPackTC(result.value!.packName))
-                    Swal.fire('Колода создана', '', 'success')
+                    Swal.fire('Pack was added', '', 'success')
                 }
             })
         }
