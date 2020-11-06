@@ -37,14 +37,14 @@ export const packsReducer = (state = InitialState, action: ActionsType): Initial
     switch (action.type) {
         case 'SET_PACKS':
             return {...state, ...action.packs}
-        case "ADD_PACK":
+        case 'ADD_PACK':
             return {...state, cardPacks: [action.pack, ...state.cardPacks]}
-        case "DELETE_PACK":
+        case 'DELETE_PACK':
             return {
                 ...state,
                 cardPacks: state.cardPacks.filter(card => card._id !== action.id)
             }
-        case "UPDATE_PACK":
+        case 'UPDATE_PACK':
             return {
                 ...state,
                 cardPacks: state.cardPacks.map((card) => card._id === action.id ? {...card, name: action.name} : card)
@@ -62,7 +62,7 @@ export const updatePackAC = (id: string | null, name: string) => ({type: 'UPDATE
 
 //thunks
 
-export const getPacksThunk = (userId?: string) => (dispatch:Dispatch, getState :()=> RootState) => {
+export const getPacksThunk = (userId?: string) => (dispatch: Dispatch, getState: () => RootState) => {
     const state = getState()
 
     const requestParameters = {
@@ -76,7 +76,7 @@ export const getPacksThunk = (userId?: string) => (dispatch:Dispatch, getState :
         cardPacksTotalCount: state.dataGetRequest.cardPacksTotalCount,
     }
 
-    packsAPI.getPacks(requestParameters,userId)
+    packsAPI.getPacks(requestParameters, userId)
         .then(res => {
             dispatch(setPacksTotalCountAC(res.data.cardPacksTotalCount))
             dispatch(setPageAC(res.data.page))
@@ -87,7 +87,7 @@ export const getPacksThunk = (userId?: string) => (dispatch:Dispatch, getState :
         })
 }
 
-export const addingPackTC = (packName: string) => (dispatch: Dispatch,getState: () => RootState) => {
+export const addingPackTC = (packName: string) => (dispatch: Dispatch, getState: () => RootState) => {
     packsAPI.addPack(packName)
         .then((res: resType) => {
             dispatch(addingPackAC(res.data.newCardsPack))
@@ -97,7 +97,7 @@ export const addingPackTC = (packName: string) => (dispatch: Dispatch,getState: 
         })
 }
 
-export const deletePackTC = (id: string | null) => (dispatch: Dispatch<any>,getState: () => RootState) => {
+export const deletePackTC = (id: string | null) => (dispatch: Dispatch<any>, getState: () => RootState) => {
     packsAPI.deletePack(id)
         .then((res) => {
             dispatch(deletePackAC(id))
