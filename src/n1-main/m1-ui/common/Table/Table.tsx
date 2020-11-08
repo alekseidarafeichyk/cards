@@ -1,10 +1,10 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import Styles from './Table.module.css'
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../m2-bll/store';
 import {
-    addingPackTC,
+
     cardPack,
     deletePackTC,
     getPacksThunk,
@@ -13,43 +13,20 @@ import {
     initialStateGetRequestType,
     setSortPacksAC
 } from "../../../m2-bll/reducers/dataForGetRequestReducer";
-import {Input} from "../Input/Input";
 import {EditableField} from "../EditableField/EditableField";
 
-// Modal windows library
-import withReactContent from 'sweetalert2-react-content'
-import Swal from "sweetalert2";
-const MySwal = withReactContent(Swal)
+import {Modal} from "../../../m4-utils/modals/modals";
+
 
 
 export const Table = React.memo(() => {
-
-
     const userID = useSelector<RootState, string>(state => state.profile._id)
     const {checkedMyPacks} = useSelector<RootState, initialStateGetRequestType>(state => state.dataGetRequest)
     const packs = useSelector<RootState, Array<cardPack>>(state => state.packs.cardPacks)
     const dispatch = useDispatch()
 
-
-
     const onClickAddPack = () => {
-       MySwal.fire({
-                title: 'Add new Pack',
-                html: <Input id={'swal-input1'} placeholder={'Enter pack name'}/> ,
-                showCancelButton: true,
-                confirmButtonText: `Save`,
-                confirmButtonColor: '#26c17e',
-                preConfirm: () => {
-                    return {
-                    packName: (document.getElementById('swal-input1') as HTMLInputElement).value
-                    }
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    dispatch(addingPackTC(result.value!.packName))
-                    Swal.fire('Pack was added', '', 'success')
-                }
-            })
+        Modal('Enter name pack', 'successTittle', dispatch)
         }
 
     const onClickDeletePack = (id: string | null) => {
