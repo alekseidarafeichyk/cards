@@ -20,7 +20,6 @@ type Slider2Type = {
 
 export const CommonSlider = React.memo((props: Slider2Type) => {
     const classes = useStyles();
-debugger
     const handleChange = (event: any, newValue: number | number[]) => {
         props.setValue(newValue as number[]);
     };

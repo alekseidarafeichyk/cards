@@ -34,6 +34,10 @@ export const forgotAPI = {
                     <a href="https://alekseidarafeichyk.github.io/cards/#/new_password/$token$">link</a>
                 </div>`
         })
+    },
+    setNewPassword(password: string,resetPasswordToken:string) {
+
+        return instance.post('auth/set-new-password',{password,resetPasswordToken})
     }
 }
 
