@@ -10,7 +10,7 @@ export const Header = () => {
             <NavLinkCommon to={login} linkName={'Login'}/>
             <NavLinkCommon to={register} linkName={'Register'}/>
             <NavLinkCommon to={passwordRecovery} linkName={'Password Recovery'}/>
-            <NavLinkCommon to={newPassword} linkName={'New Password'}/>
+            <NavLinkCommon to={`${newPassword}`} linkName={'New Password'}/>
             <NavLinkCommon to={profile} linkName={'Profile'}/>
             <NavLinkCommon to={packs} linkName={'Packs'}/>
         </div>)

@@ -14,7 +14,7 @@ const App = () => {
     }, [dispatch])
 
     return (
-        <div className={'App'}>
+        <div className={'App'} >
             <HashRouter>
                 <Main/>
             </HashRouter>

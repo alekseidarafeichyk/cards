@@ -8,6 +8,7 @@ import {Button} from '../../../common/Button/Button';
 import {LogOut} from '../../../../m2-bll/reducers/loginReducer';
 import {RequestStatusType} from '../../../../m2-bll/reducers/registerReducer';
 import {Loader} from '../../../common/Loader/Loader';
+import style from './Profile.module.css'
 
 export const Profile = () => {
     const isAuth = useSelector<RootState, boolean>(state => state.login.isAuth)
@@ -24,18 +25,20 @@ export const Profile = () => {
     }
 
     return (
-        <div>
-            <div>
-                <span>name : {user.name}</span>
+        <div className={style.profileContainer}>
+            <div className={style.profile}>
+                <div>
+                    <span>name : {user.name}</span>
+                </div>
+                <div>
+                    <span>avatar : {user.avatar}</span>
+                </div>
+                <div>
+                    <span>publicCardPacksCount : {user.publicCardPacksCount}</span>
+                </div>
+                {status === 'loading' ? <Loader/> :
+                    <Button onClick={logoutHandler} name={'Logout'}/>}
             </div>
-            <div>
-                <span>avatar : {user.avatar}</span>
-            </div>
-            <div>
-                <span>publicCardPacksCount : {user.publicCardPacksCount}</span>
-            </div>
-            {status === 'loading' ? <Loader/> :
-                <Button onClick={logoutHandler} name={'Logout'}/>}
         </div>
     )
 }

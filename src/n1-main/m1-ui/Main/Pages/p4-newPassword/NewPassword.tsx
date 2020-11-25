@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useFormik} from 'formik';
 import style from './NewPassword.module.css'
 import {Input} from '../../../common/Input/Input';
 import {Button} from '../../../common/Button/Button';
 import {Redirect, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {setNewPasswordTC} from '../../../../m2-bll/reducers/newPasswordReducer';
+import {setNewPasswordAC, setNewPasswordTC} from '../../../../m2-bll/reducers/newPasswordReducer';
 import {RootState} from '../../../../m2-bll/store';
 import {login} from '../../../routes/RoutePass';
 import {modalSuccessNewPassword} from '../../../../m4-utils/modals/modals';
@@ -15,6 +15,12 @@ export const NewPassword = React.memo(() => {
     const dispatch = useDispatch();
     const info = useSelector<RootState, string>(state => state.newPassword.info)
 
+
+    useEffect(() =>{
+        return () => {
+            dispatch(setNewPasswordAC('','',''))
+        }
+    })
 
     const formik = useFormik({
         initialValues: {
@@ -29,7 +35,6 @@ export const NewPassword = React.memo(() => {
             dispatch(setNewPasswordTC(values.newPassword, token))
         }
     });
-
 
     if (info) {
         modalSuccessNewPassword(info)
