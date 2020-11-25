@@ -17,7 +17,7 @@ export const Routes = () => {
             <Route path={login} render={() => <Login/>}/>
             <Route path={register} render={() => <Register/>}/>
             <Route path={passwordRecovery} render={() => <PasswordRecovery/>}/>
-            <Route path={newPassword} render={() => <NewPassword/>}/>
+            <Route path={`${newPassword}/:token`} render={() => <NewPassword/>}/>
             <Route path={profile} render={() => <Profile/>}/>
             <Route path={packs} render={() => <Packs/>}/>
             <Route path={cards} render={() => <Cards/>}/>
