@@ -4,11 +4,6 @@ import {Input} from "../../m1-ui/common/Input/Input";
 import {addingPackTC} from "../../m2-bll/reducers/packsReducer";
 import React from "react";
 
-
-
-
-
-
 const MySwal = withReactContent(Swal)
 
 export const Modal = (title: string, successTittle: string, dispatch: any) =>{
@@ -34,5 +29,14 @@ export const Modal = (title: string, successTittle: string, dispatch: any) =>{
                 timer: 1000
             })
         }
+    })
+}
+
+export const modalSuccessNewPassword = (info : string) => {
+    Swal.fire({
+        title: info,
+        text: 'You will be redirected to the login page',
+        icon: 'success',
+        confirmButtonText: 'Ok'
     })
 }

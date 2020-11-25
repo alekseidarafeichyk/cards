@@ -8,8 +8,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setNewPasswordTC} from '../../../../m2-bll/reducers/newPasswordReducer';
 import {RootState} from '../../../../m2-bll/store';
 import {login} from '../../../routes/RoutePass';
+import {modalSuccessNewPassword} from '../../../../m4-utils/modals/modals';
 
-export const NewPassword = () => {
+export const NewPassword = React.memo(() => {
     const {token} = useParams();
     const dispatch = useDispatch();
     const info = useSelector<RootState, string>(state => state.newPassword.info)
@@ -29,7 +30,9 @@ export const NewPassword = () => {
         }
     });
 
+
     if (info) {
+        modalSuccessNewPassword(info)
         return <Redirect to={login}/>
     }
 
@@ -47,4 +50,4 @@ export const NewPassword = () => {
             </form>
         </div>
     )
-}
+})

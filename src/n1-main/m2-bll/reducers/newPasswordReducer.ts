@@ -3,7 +3,8 @@ import {forgotAPI, packsAPI} from '../../m3-dal/api';
 
 const InitialState = {
     info: '',
-    error: ''
+    error: '',
+    resetPasswordToken : ''
 }
 
 export const newPasswordReducer = (state = InitialState, action: ActionType) => {
@@ -19,15 +20,15 @@ export const newPasswordReducer = (state = InitialState, action: ActionType) => 
     }
 }
 
-export const setNewPasswordAC = (info: string, error: string) => ({type: 'SET_NEW_PASSWORD', info, error} as const)
+export const setNewPasswordAC = (info: string, error: string,resetPasswordToken:string) => ({type: 'SET_NEW_PASSWORD', info, error,resetPasswordToken} as const)
 
 export const setNewPasswordTC = (password: string,resetPasswordToken:string) => (dispatch: Dispatch<any>) => {
     forgotAPI.setNewPassword(password,resetPasswordToken)
         .then(res => {
-            dispatch(setNewPasswordAC(res.data.info,''))
+            dispatch(setNewPasswordAC(res.data.info,'',resetPasswordToken))
         })
         .catch(res => {
-            dispatch(setNewPasswordAC('',res.response.data.error))
+            dispatch(setNewPasswordAC('',res.response.data.error,resetPasswordToken))
         })
 }
 

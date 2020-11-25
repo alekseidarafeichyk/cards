@@ -4,6 +4,7 @@ import {NavLinkCommon} from '../../common/Navlink/NavlinkCommon';
 import {cards, login, newPassword, packs, passwordRecovery, profile, register} from '../../routes/RoutePass';
 
 export const Header = () => {
+
     return (
         <div className={style.header}>
             <NavLinkCommon to={login} linkName={'Login'}/>
